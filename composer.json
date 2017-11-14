@@ -1,0 +1,42 @@
+{
+    "name": "dynamic/silverstripe-jobs",
+    "description": "Post open positions and receive online applications",
+    "authors": [
+        {
+            "name": "Dynamic",
+            "email": "dev@dynamicagency.com",
+            "homepage": "http://www.dynamicagency.com"
+        }
+    ],
+    "keywords": [
+        "silverstripe"
+    ],
+    "type": "silverstripe-vendormodule",
+    "license": "BSD-3-Clause",
+    "require": {
+        "silverstripe/recipe-cms": "^1.0",
+        "silverstripe/vendor-plugin": "^1.0",
+        "dynamic/silverstripe-collection": "^2.0"
+    },
+    "require-dev": {
+        "phpunit/PHPUnit": "^5.7",
+        "squizlabs/php_codesniffer": "*"
+    },
+    "config": {
+        "process-timeout": 600
+    },
+    "autoload": {
+        "psr-4": {
+            "Dynamic\\Jobs\\": "src/",
+            "Dynamic\\Jobs\\Test\\": "tests/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-name": "silverstripe-jobs",
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

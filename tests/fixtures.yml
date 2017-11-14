@@ -1,0 +1,101 @@
+SilverStripe\Security\Member:
+  Admin:
+    FirstName: Test
+    Surname: Administrator
+  Create:
+    FirstName: Test
+    Surname: Editor
+  Edit:
+    FirstName: Blog
+    Surname: Editor
+  Delete:
+    FirstName: Blog
+    Surname: Writer
+  Visitor:
+    FirstName: Blog
+    Surname: Visitor
+
+SilverStripe\Security\Group:
+  Administrators:
+    Title: Administrators
+    Members:
+      - =>SilverStripe\Security\Member.Admin
+  Create:
+    Title: Create
+    Members:
+      - =>SilverStripe\Security\Member.Create
+  Edit:
+    Title: Edit
+    Members:
+      - =>SilverStripe\Security\Member.Edit
+  Delete:
+    Title: Delete
+    Members:
+      - =>SilverStripe\Security\Member.Delete
+
+SilverStripe\Security\Permission:
+  Administrators:
+    Code: ADMIN
+    Group: =>SilverStripe\Security\Group.Administrators
+  Create:
+    Code: Job_CREATE
+    Group: =>SilverStripe\Security\Group.Create
+  Edit:
+    Code: Job_EDIT
+    Group: =>SilverStripe\Security\Group.Edit
+  Delete:
+    Code: Job_DELETE
+    Group: =>SilverStripe\Security\Group.Delete
+
+SilverStripe\Assets\File:
+  File:
+    FileFilename: FileTest.pdf
+    FileHash: 55b443b60176235ef09801153cca4e6da7494a0c
+    Name: FileTest.pdf
+    URL: 'FileTest.pdf'
+
+Dynamic\Jobs\Model\JobCollection:
+  default:
+    Title: 'Jobs'
+
+Dynamic\Jobs\Model\JobCategory:
+  one:
+    Title: 'Category One'
+  two:
+    Title: 'Category Two'
+
+Dynamic\Jobs\Model\Job:
+  one:
+    Title: 'Job One'
+  two:
+    Title: 'Job Two'
+  past:
+    Title: 'Past'
+    PostDate: '2017-11-01'
+    EndPostDate: '2017-11-02 23:59:59'
+    Parent: =>Dynamic\Jobs\Model\JobCollection.default
+  open:
+    Title: 'Open'
+    PostDate: '2017-11-01'
+    EndPostDate: '2017-11-30 23:59:59'
+    FromAddress: 'no-reply@core-jobs.com'
+    EmailRecipient: 'test@core-jobs.com'
+    EmailSubject: ''
+    Message: ''
+    Parent: =>Dynamic\Jobs\Model\JobCollection.default
+  future:
+    Title: 'Past'
+    PostDate: '2017-11-28'
+    EndPostDate: '2017-12-01 23:59:59'
+    Parent: =>Dynamic\Jobs\Model\JobCollection.default
+
+Dynamic\Jobs\Model\JobSubmission:
+  one:
+    FirstName: 'George'
+    LastName: 'Costanza'
+    JobID: =>Dynamic\Jobs\Model\Job.one
+
+  two:
+    FirstName: 'Jorge'
+    LastName: 'Posada'
+    JobID: =>Dynamic\Jobs\Model\Job.two

@@ -1,0 +1,8 @@
+---
+Name: silverstripejobsconfig
+---
+Dynamic\Jobs\Model\JobCollectionController:
+  managed_object: Dynamic\Jobs\Model\Job
+  extensions:
+    - Dynamic\Collection\CollectionExtension
+    - Dynamic\Jobs\Extensions\JobCollectionExtension
