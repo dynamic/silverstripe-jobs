@@ -6,5 +6,4 @@ use \PageController;
 
 class JobCollectionController extends PageController
 {
-
 }
