@@ -32,6 +32,11 @@ class JobSubmission extends DataObject
     private static $description = 'Online job application allowing for a resume upload';
 
     /**
+     * @var string
+     */
+    private static $table_name = 'Dynamic_JobSubmission';
+
+    /**
      * @var array
      */
     private static $db = array(

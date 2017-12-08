@@ -32,6 +32,11 @@ class JobCollection extends Page
     private static $description = 'Display a list of available jobs';
 
     /**
+     * @var string
+     */
+    private static $table_name = 'Dynamic_JobCollection';
+
+    /**
      * @var array
      */
     private static $db = array(
