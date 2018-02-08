@@ -67,7 +67,7 @@ class SimpleHtmlEditorField extends TextareaField
      *
      * @return DBHTMLText
      */
-    public function FieldHolder($attributes = array())
+    public function FieldHolder($attributes = [])
     {
         Requirements::javascript("silverstripe/admin: thirdparty/jquery/jquery.min.js");
         Requirements::javascript("silverstripe/admin: thirdparty/tinymce/jquery.tinymce.min.js");

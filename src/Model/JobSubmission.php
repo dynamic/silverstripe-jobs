@@ -14,6 +14,10 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 
+/**
+ * Class JobSubmission
+ * @package Dynamic\Jobs\Model
+ */
 class JobSubmission extends DataObject
 {
     /**
@@ -34,22 +38,22 @@ class JobSubmission extends DataObject
     /**
      * @var array
      */
-    private static $db = array(
+    private static $db = [
         'FirstName' => 'Varchar(255)',
         'LastName' => 'Varchar(255)',
         'Email' => 'Varchar(255)',
         'Phone' => 'Varchar(255)',
         'Available' => 'Date',
         'Content' => 'HTMLText',
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $has_one = array(
+    private static $has_one = [
         'Job' => Job::class,
-        'Resume' => File::class
-    );
+        'Resume' => File::class,
+    ];
 
     /**
      * @var string
@@ -59,16 +63,16 @@ class JobSubmission extends DataObject
     /**
      * @var array
      */
-    private static $summary_fields = array(
+    private static $summary_fields = [
         'Name' => 'Applicant',
         'Job.Title' => 'Job',
-        'Created.Nice' => 'Date'
-    );
+        'Created.Nice' => 'Date',
+    ];
 
     /**
      * @var array
      */
-    private static $searchable_fields = array(
+    private static $searchable_fields = [
         'FirstName' => [
             'title' => 'First',
         ],
@@ -87,7 +91,7 @@ class JobSubmission extends DataObject
         'Content' => [
             'title' => 'Cover Letter',
         ],
-    );
+    ];
 
     /**
      * @return string
@@ -117,11 +121,11 @@ class JobSubmission extends DataObject
     {
         // Resume Upload
         $ResumeField = FileField::create('Resume')->setTitle('Resume');
-        $ResumeField->getValidator()->setAllowedExtensions(array(
+        $ResumeField->getValidator()->setAllowedExtensions([
             'pdf',
             'doc',
-            'docx'
-        ));
+            'docx',
+        ]);
         $ResumeField->setFolderName('Uploads/Resumes');
         $ResumeField->setRelationAutoSetting(false);
         $ResumeField->setAttribute('required', true);
@@ -150,13 +154,13 @@ class JobSubmission extends DataObject
      */
     public function getRequiredFields()
     {
-        return new RequiredFields(array(
+        return new RequiredFields([
             'FirstName',
             'LastName',
             'Email',
             'Phone',
             'Resume',
-        ));
+        ]);
     }
 
     /**

@@ -17,6 +17,10 @@ use SilverStripe\Security\PermissionProvider;
 use Symbiote\GridFieldExtensions\GridFieldAddExistingSearchButton;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
+/**
+ * Class Job
+ * @package Dynamic\Jobs\Model
+ */
 class Job extends Page implements PermissionProvider
 {
     /**
@@ -37,35 +41,35 @@ class Job extends Page implements PermissionProvider
     /**
      * @var array
      */
-    private static $db = array(
-        'PositionType' => "Enum('Full-time, Part-time, Freelance, Internship')",
+    private static $db = [
+        'PositionType' => "Enum(array('Full-time', 'Part-time', 'Freelance', 'Internship'))",
         'PostDate' => 'Date',
         'EndPostDate' => 'Date',
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $has_many = array(
+    private static $has_many = [
         'Sections' => JobSection::class,
         'Submissions' => JobSubmission::class,
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $many_many = array(
+    private static $many_many = [
         'Categories' => JobCategory::class,
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $many_many_extraFields = array(
-        'Categories' => array(
-            'Sort' => 'Int'
-        ),
-    );
+    private static $many_many_extraFields = [
+        'Categories' => [
+            'Sort' => 'Int',
+        ],
+    ];
 
     /**
      * @var array
@@ -133,12 +137,10 @@ class Job extends Page implements PermissionProvider
             DropdownField::create(
                 'PositionType',
                 'Position Type',
-                singleton(Job::class)->dbObject('PositionType')->enumValues()
+                Job::singleton()->dbObject('PositionType')->enumValues()
             )->setEmptyString('--select--'),
             DateField::create('PostDate', 'Position Post Date'),
-                //->setConfig('showcalendar', true),
             DateField::create('EndPostDate', 'Position Post End Date'),
-                //->setConfig('showcalendar', true),
         ]);
 
         if ($this->ID) {
@@ -152,9 +154,9 @@ class Job extends Page implements PermissionProvider
             $config->addComponent(new GridFieldDeleteAction(false));
             $sections = $this->Sections()->sort('Sort');
             $sectionsField = GridField::create('Sections', 'Sections', $sections, $config);
-            $fields->addFieldsToTab('Root.Details.Sections', array(
+            $fields->addFieldsToTab('Root.Details.Sections', [
                 $sectionsField,
-            ));
+            ]);
 
             // categories
             $config = GridFieldConfig_RelationEditor::create();
@@ -167,9 +169,9 @@ class Job extends Page implements PermissionProvider
             }
             $categories = $this->Categories()->sort('Sort');
             $categoriesField = GridField::create('Categories', 'Categories', $categories, $config);
-            $fields->addFieldsToTab('Root.Details.Categories', array(
+            $fields->addFieldsToTab('Root.Details.Categories', [
                 $categoriesField,
-            ));
+            ]);
         }
 
         return $fields;
@@ -222,11 +224,11 @@ class Job extends Page implements PermissionProvider
      */
     public function providePermissions()
     {
-        return array(
+        return [
             'Job_EDIT' => 'Edit a Job',
             'Job_DELETE' => 'Delete a Job',
             'Job_CREATE' => 'Create a Job',
-        );
+        ];
     }
 
     /**

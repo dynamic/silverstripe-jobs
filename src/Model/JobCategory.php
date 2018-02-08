@@ -7,6 +7,10 @@ use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 
+/**
+ * Class JobCategory
+ * @package Dynamic\Jobs\Model
+ */
 class JobCategory extends DataObject
 {
     /**
@@ -30,25 +34,25 @@ class JobCategory extends DataObject
     /**
      * @var array
      */
-    private static $belongs_many_many = array(
-        'Jobs' => Job::class
-    );
+    private static $belongs_many_many = [
+        'Jobs' => Job::class,
+    ];
 
     /**
      * @var array
      */
-    private static $summary_fields = array(
+    private static $summary_fields = [
         'Name' => 'Name',
         'Title' => 'Title',
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $searchable_fields = array(
+    private static $searchable_fields = [
         'Name',
         'Title',
-    );
+    ];
 
     /**
      * @return FieldList

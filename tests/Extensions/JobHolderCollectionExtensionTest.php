@@ -25,9 +25,9 @@ class JobHolderCollectionExtensionTest extends SapphireTest
     /**
      * @var array
      */
-    protected static $extra_dataobjects = array(
+    protected static $extra_dataobjects = [
         JobHolderCollectionExtensionTest_Object::class,
-    );
+    ];
 
     /**
      * Tests updateCollectionFilters()
@@ -37,7 +37,7 @@ class JobHolderCollectionExtensionTest extends SapphireTest
         /** @var JobHolderCollectionExtensionTest_Object $object */
         $object = Injector::inst()->create(JobHolderCollectionExtensionTest_Object::class);
         $object->write();
-        $filter = array();
+        $filter = [];
         $newFilter = $object->getCollectionFilters($filter);
 
         $this->assertArrayHasKey('ParentID', $newFilter);
@@ -79,9 +79,11 @@ class JobHolderCollectionExtensionTest extends SapphireTest
         $future = $this->objFromFixture(Job::class, 'future');
         $future->write();
 
-        $list = new ArrayList(array(
-            $past, $open, $future
-        ));
+        $list = new ArrayList([
+            $past,
+            $open,
+            $future,
+        ]);
 
         DBDatetime::set_mock_now('2017-11-15');
         $newList = $object->getCollectionItems($list);

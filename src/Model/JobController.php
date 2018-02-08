@@ -20,14 +20,14 @@ use SilverStripe\View\ViewableData_Customised;
  */
 class JobController extends PageController
 {
-    /*
-     *
+    /**
+     * @var array
      */
-    private static $allowed_actions = array(
+    private static $allowed_actions = [
         'apply',
         'JobApp',
-        'complete'
-    );
+        'complete',
+    ];
 
     /**
      * @return ViewableData_Customised
@@ -46,9 +46,9 @@ class JobController extends PageController
         );
         $Form->Fields()->push(HiddenField::create('JobID', 'JobID', $this->ID));
 
-        $page = $this->customise(array(
-            'Form' => $Form
-        ));
+        $page = $this->customise([
+            'Form' => $Form,
+        ]);
 
         return $page;
     }
@@ -66,12 +66,12 @@ class JobController extends PageController
             new FormAction('doApply', 'Apply')
         );
 
-        $required = new RequiredFields(array(
+        $required = new RequiredFields([
             'FirstName',
             'LastName',
             'Email',
-            'Phone'
-        ));
+            'Phone',
+        ]);
 
 
         return Form::create($this, "JobApp", $fields, $actions, $required);
@@ -122,6 +122,6 @@ class JobController extends PageController
      */
     public function complete()
     {
-        return $this->customise(array());
+        return $this->customise([]);
     }
 }
