@@ -10,6 +10,10 @@ use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Security\Member;
 
+/**
+ * Class JobTest
+ * @package Dynamic\Jobs\Tests
+ */
 class JobTest extends SapphireTest
 {
     /**
@@ -84,11 +88,11 @@ class JobTest extends SapphireTest
     {
         /** @var Job $object */
         $object = Injector::inst()->create(Job::class);
-        $perms = array(
+        $perms = [
             'Job_EDIT' => 'Edit a Job',
             'Job_DELETE' => 'Delete a Job',
             'Job_CREATE' => 'Create a Job',
-        );
+        ];
         $this->assertEquals($perms, $object->providePermissions());
     }
 

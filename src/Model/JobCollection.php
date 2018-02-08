@@ -14,6 +14,10 @@ use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\ValidationResult;
 
+/**
+ * Class JobCollection
+ * @package Dynamic\Jobs\Model
+ */
 class JobCollection extends Page
 {
     /**
@@ -34,19 +38,19 @@ class JobCollection extends Page
     /**
      * @var array
      */
-    private static $db = array(
+    private static $db = [
         'Message' => 'HTMLText',
         'FromAddress' => 'Varchar(255)',
         'EmailRecipient' => 'Varchar(255)',
-        'EmailSubject' => 'Varchar(255)'
-    );
+        'EmailSubject' => 'Varchar(255)',
+    ];
 
     /**
      * @var array
      */
-    private static $has_one = array(
-        'Application' => File::class
-    );
+    private static $has_one = [
+        'Application' => File::class,
+    ];
 
     /**
      * @var string
@@ -56,9 +60,9 @@ class JobCollection extends Page
     /**
      * @var array
      */
-    private static $allowed_children = array(
-        Job::class
-    );
+    private static $allowed_children = [
+        Job::class,
+    ];
 
     /**
      * @return FieldList
@@ -68,15 +72,15 @@ class JobCollection extends Page
         $fields = parent::getCMSFields();
 
         $app = new UploadField('Application', 'Application Form');
-        $app->allowedExtensions = array('pdf','PDF');
+        $app->allowedExtensions = ['pdf', 'PDF'];
         $fields->addFieldToTab('Root.ApplicationFile', $app);
 
-        $fields->addFieldsToTab('Root.Configuration', array(
+        $fields->addFieldsToTab('Root.Configuration', [
             EmailField::create('FromAddress', 'Submission From Address'),
             EmailField::create('EmailRecipient', 'Submission Recipient'),
             TextField::create('EmailSubject', 'Submission Email Subject Line'),
             HTMLEditorField::create('Message', 'Submission Message'),
-        ));
+        ]);
 
         return $fields;
     }
@@ -86,7 +90,6 @@ class JobCollection extends Page
      */
     public function validate()
     {
-
         $result = parent::validate();
         // TODO - this bugs out and won't create the page if it is in
         /*

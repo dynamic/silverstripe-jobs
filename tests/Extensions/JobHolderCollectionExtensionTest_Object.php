@@ -24,9 +24,9 @@ class JobHolderCollectionExtensionTest_Object extends DataObject implements Test
     /**
      * @var array
      */
-    private static $extensions = array(
-        JobCollectionExtension::class
-    );
+    private static $extensions = [
+        JobCollectionExtension::class,
+    ];
 
     /**
      * @param $filter

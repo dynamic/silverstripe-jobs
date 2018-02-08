@@ -6,6 +6,10 @@ use SilverStripe\Core\Extension;
 use SilverStripe\Forms\Form;
 use SilverStripe\ORM\FieldType\DBDatetime;
 
+/**
+ * Class JobCollectionExtension
+ * @package Dynamic\Jobs\Extensions
+ */
 class JobCollectionExtension extends Extension
 {
     /**
@@ -22,8 +26,6 @@ class JobCollectionExtension extends Extension
     public function updateCollectionForm(Form &$form)
     {
         $fields = $form->Fields();
-        //$fields->dataFieldByName('Categories__ID')
-        //    ->setEmptyString('(Any)');
     }
 
     /**

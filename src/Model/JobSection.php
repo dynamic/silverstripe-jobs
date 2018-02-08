@@ -7,6 +7,10 @@ use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ValidationResult;
 use SilverStripe\Security\Permission;
 
+/**
+ * Class JobSection
+ * @package Dynamic\Jobs\Model
+ */
 class JobSection extends DataObject
 {
     /**
@@ -22,12 +26,12 @@ class JobSection extends DataObject
     /**
      * @var array
      */
-    private static $db = array(
+    private static $db = [
         'Name' => 'Varchar(255)',
         'Title' => 'Varchar(255)',
         'Content' => 'HTMLText',
         'Sort' => 'Int',
-    );
+    ];
 
     /**
      * @var array
@@ -44,19 +48,19 @@ class JobSection extends DataObject
     /**
      * @var array
      */
-    private static $summary_fields = array(
+    private static $summary_fields = [
         'Name' => 'Name',
         'Title' => 'Title',
-    );
+    ];
 
     /**
      * @var array
      */
-    private static $searchable_fields = array(
+    private static $searchable_fields = [
         'Name',
         'Title',
         'Content',
-    );
+    ];
 
     /**
      * @return FieldList

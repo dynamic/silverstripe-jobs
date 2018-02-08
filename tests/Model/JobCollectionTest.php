@@ -10,6 +10,10 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\ValidationResult;
 
+/**
+ * Class JobCollectionTest
+ * @package Dynamic\Jobs\Tests
+ */
 class JobCollectionTest extends SapphireTest
 {
     /**

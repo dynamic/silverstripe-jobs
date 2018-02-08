@@ -65,13 +65,13 @@ class JobControllerTest extends FunctionalTest
         $object = $this->objFromFixture(Job::class, 'open');
 
         $this->get($object->Link('apply'));
-        $page = $this->post($object->Link('JobApp'), array(
+        $page = $this->post($object->Link('JobApp'), [
             'FirstName' => 'Eric',
             'LastName' => 'Praline',
             'Email' => 'eric.praline@gmail.com',
             'Phone' => '444-555-6666',
             'Resume' => null,
-        ));
+        ]);
 
         // $this->assertEmailSent('test@core-jobs.com');
 
