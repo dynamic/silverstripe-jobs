@@ -24,6 +24,11 @@ class JobCategory extends DataObject
     private static $plural_name = 'Categories';
 
     /**
+     * @var string
+     */
+    private static $table_name = 'Dynamic_JobCategory';
+
+    /**
      * @var array
      */
     private static $db = [

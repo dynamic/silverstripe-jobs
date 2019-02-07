@@ -39,6 +39,11 @@ class Job extends Page implements PermissionProvider
     private static $description = 'Job detail page allowing for application submissions';
 
     /**
+     * @var string
+     */
+    private static $table_name = 'Dynamic_Job';
+
+    /**
      * @var array
      */
     private static $db = [

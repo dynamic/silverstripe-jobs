@@ -24,6 +24,11 @@ class JobSection extends DataObject
     private static $plural_name = 'Sections';
 
     /**
+     * @var string
+     */
+    private static $table_name = 'Dynamic_JobSection';
+
+    /**
      * @var array
      */
     private static $db = [
