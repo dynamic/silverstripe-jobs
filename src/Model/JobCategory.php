@@ -2,6 +2,7 @@
 
 namespace Dynamic\Jobs\Model;
 
+use Dynamic\Jobs\Page\Job;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\ORM\DataObject;

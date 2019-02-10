@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\Jobs\Tests;
+namespace Dynamic\Jobs\Test;
 
 use Dynamic\Jobs\Model\JobSection;
 use SilverStripe\Core\Injector\Injector;

@@ -1,8 +1,6 @@
 <?php
 
-namespace Dynamic\Jobs\Model;
-
-use \Page;
+namespace Dynamic\Jobs\Page;
 
 use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\File;
@@ -10,6 +8,7 @@ use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\Forms\TextField;
+use SilverStripe\Lumberjack\Model\Lumberjack;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\ValidationResult;
@@ -18,7 +17,7 @@ use SilverStripe\ORM\ValidationResult;
  * Class JobCollection
  * @package Dynamic\Jobs\Model
  */
-class JobCollection extends Page
+class JobCollection extends \Page
 {
     /**
      * @var string
@@ -55,6 +54,13 @@ class JobCollection extends Page
      */
     private static $has_one = [
         'Application' => File::class,
+    ];
+
+    /**
+     * @var array
+     */
+    private static $extensions = [
+        Lumberjack::class,
     ];
 
     /**

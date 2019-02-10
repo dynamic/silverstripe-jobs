@@ -1,7 +1,10 @@
 <?php
 
-namespace Dynamic\Jobs\Model;
+namespace Dynamic\Jobs\Page;
 
+use Dynamic\Jobs\Model\JobCategory;
+use Dynamic\Jobs\Model\JobSection;
+use Dynamic\Jobs\Model\JobSubmission;
 use \Page;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\DateField;
@@ -11,6 +14,8 @@ use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
+use SilverStripe\Forms\ListboxField;
+use SilverStripe\Forms\TreeMultiselectField;
 use SilverStripe\ORM\Search\SearchContext;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
@@ -90,6 +95,26 @@ class Job extends Page implements PermissionProvider
     ];
 
     /**
+     * @var string
+     */
+    private static $default_parent = JobCollection::class;
+
+    /**
+     * @var bool
+     */
+    private static $can_be_root = false;
+
+    /**
+     * @var bool
+     */
+    private static $show_in_sitetree = false;
+
+    /**
+     * @var array
+     */
+    private static $allowed_children = [];
+
+    /**
      * @return SearchContext
      */
     public function getCustomSearchContext()
@@ -110,16 +135,6 @@ class Job extends Page implements PermissionProvider
             $filters
         );
     }
-
-    /**
-     * @var string
-     */
-    private static $default_parent = JobCollection::class;
-
-    /**
-     * @var bool
-     */
-    private static $can_be_root = false;
 
     /**
      *
@@ -174,6 +189,13 @@ class Job extends Page implements PermissionProvider
             }
             $categories = $this->Categories()->sort('Sort');
             $categoriesField = GridField::create('Categories', 'Categories', $categories, $config);
+
+            $categoriesField = ListboxField::create(
+                'Categories',
+                'Categories',
+                JobCategory::get()->map()
+            );
+
             $fields->addFieldsToTab('Root.Details.Categories', [
                 $categoriesField,
             ]);

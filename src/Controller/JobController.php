@@ -1,7 +1,8 @@
 <?php
 
-namespace Dynamic\Jobs\Model;
+namespace Dynamic\Jobs\Page;
 
+use Dynamic\Jobs\Model\JobSubmission;
 use PageController;
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Email\Email;
