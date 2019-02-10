@@ -54,7 +54,7 @@ SilverStripe\Assets\File:
     Name: FileTest.pdf
     URL: 'FileTest.pdf'
 
-Dynamic\Jobs\Model\JobCollection:
+Dynamic\Jobs\Page\JobCollection:
   default:
     Title: 'Jobs'
 
@@ -64,7 +64,7 @@ Dynamic\Jobs\Model\JobCategory:
   two:
     Title: 'Category Two'
 
-Dynamic\Jobs\Model\Job:
+Dynamic\Jobs\Page\Job:
   one:
     Title: 'Job One'
   two:
@@ -73,7 +73,7 @@ Dynamic\Jobs\Model\Job:
     Title: 'Past'
     PostDate: '2017-11-01'
     EndPostDate: '2017-11-02 23:59:59'
-    Parent: =>Dynamic\Jobs\Model\JobCollection.default
+    Parent: =>Dynamic\Jobs\Page\JobCollection.default
   open:
     Title: 'Open'
     PostDate: '2017-11-01'
@@ -82,20 +82,20 @@ Dynamic\Jobs\Model\Job:
     EmailRecipient: 'test@core-jobs.com'
     EmailSubject: ''
     Message: ''
-    Parent: =>Dynamic\Jobs\Model\JobCollection.default
+    Parent: =>Dynamic\Jobs\Page\JobCollection.default
   future:
     Title: 'Past'
     PostDate: '2017-11-28'
     EndPostDate: '2017-12-01 23:59:59'
-    Parent: =>Dynamic\Jobs\Model\JobCollection.default
+    Parent: =>Dynamic\Jobs\Page\JobCollection.default
 
 Dynamic\Jobs\Model\JobSubmission:
   one:
     FirstName: 'George'
     LastName: 'Costanza'
-    JobID: =>Dynamic\Jobs\Model\Job.one
+    JobID: =>Dynamic\Jobs\Page\Job.one
 
   two:
     FirstName: 'Jorge'
     LastName: 'Posada'
-    JobID: =>Dynamic\Jobs\Model\Job.two
+    JobID: =>Dynamic\Jobs\Page\Job.two

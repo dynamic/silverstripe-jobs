@@ -3,6 +3,7 @@
 namespace Dynamic\Jobs\Model;
 
 use Dynamic\Jobs\Forms\SimpleHtmlEditorField;
+use Dynamic\Jobs\Page\Job;
 use SilverStripe\Assets\File;
 use SilverStripe\Forms\DateField;
 use SilverStripe\Forms\EmailField;

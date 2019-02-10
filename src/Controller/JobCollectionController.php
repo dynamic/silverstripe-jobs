@@ -1,6 +1,6 @@
 <?php
 
-namespace Dynamic\Jobs\Model;
+namespace Dynamic\Jobs\Page;
 
 use \PageController;
 

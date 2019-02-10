@@ -2,7 +2,7 @@
 
 namespace Dynamic\Jobs\Tests\Extensions;
 
-use Dynamic\Jobs\Model\Job;
+use Dynamic\Jobs\Page\Job;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\DropdownField;

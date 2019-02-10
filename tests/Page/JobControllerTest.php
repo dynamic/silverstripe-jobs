@@ -1,10 +1,10 @@
 <?php
 
-namespace Dynamic\Jobs\Tests;
+namespace Dynamic\Jobs\Test\Page;
 
-use Dynamic\Jobs\Model\Job;
-use Dynamic\Jobs\Model\JobController;
-use Dynamic\Jobs\Model\JobCollection;
+use Dynamic\Jobs\Page\Job;
+use Dynamic\Jobs\Page\JobController;
+use Dynamic\Jobs\Page\JobCollection;
 use SilverStripe\Control\HTTPResponse;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\FunctionalTest;
