@@ -23,6 +23,16 @@ th{ font-size: 16px; text-align: left; }
 	<tr>
 		<th>Application For Employment</th>
 	</tr>
+	<tr>
+		<td>
+			<a href="$Submission.EditLink">View application online</a>.
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<a href="$Submission.Resume.AbsoluteLink">View resume online</a>.
+		</td>
+	</tr>
 </table>
 
 <!-- Personal Information -->
@@ -46,7 +56,7 @@ th{ font-size: 16px; text-align: left; }
 				</tr>
 				<tr>
 					<td class="data-value">
-						$LastName, $FirstName
+						$Submission.LastName, $Submission.FirstName
 					</td>
 				</tr>
 			</table>
@@ -65,7 +75,7 @@ th{ font-size: 16px; text-align: left; }
 							</tr>
 							<tr>
 								<td class="data-value">
-									$Email
+									$Submission.Email
 								</td>
 							</tr>
 						</table>
@@ -87,7 +97,7 @@ th{ font-size: 16px; text-align: left; }
                             </tr>
                             <tr>
                                 <td class="data-value">
-									$Phone
+									$Submission.Phone
                                 </td>
                             </tr>
                         </table>
@@ -113,7 +123,7 @@ th{ font-size: 16px; text-align: left; }
 				</tr>
 				<tr>
 					<td class="data-value">
-						$Job.Title
+						$Submission.Job.Title
 					</td>
 				</tr>
 			</table>
@@ -127,7 +137,7 @@ th{ font-size: 16px; text-align: left; }
 				</tr>
 				<tr>
 					<td class="data-value">
-						$Available
+						$Submission.Available
 					</td>
 				</tr>
 			</table>
@@ -145,7 +155,7 @@ th{ font-size: 16px; text-align: left; }
             <table width="100%">
                 <tr>
                     <td class="data-value">
-						$Content
+						$Submission.Content
                     </td>
                 </tr>
             </table>

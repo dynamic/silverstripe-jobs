@@ -2,9 +2,12 @@
 
 namespace Dynamic\Jobs\Model;
 
+use Dynamic\Jobs\Admin\JobAdmin;
 use Dynamic\Jobs\Forms\SimpleHtmlEditorField;
 use Dynamic\Jobs\Page\Job;
 use SilverStripe\Assets\File;
+use SilverStripe\Control\Controller;
+use SilverStripe\Control\Director;
 use SilverStripe\Forms\DateField;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FieldList;
@@ -195,6 +198,18 @@ class JobSubmission extends DataObject
         $fields->insertBefore($resume, 'Content');
 
         return $fields;
+    }
+
+    public function getEditLink()
+    {
+        $link = Controller::join_links(
+            Director::absoluteBaseURL(),
+            singleton(JobAdmin::class)->Link(),
+            'Dynamic-Jobs-Model-JobSubmission/EditForm/field/Dynamic-Jobs-Model-JobSubmission/item/' .
+                $this->ID . '/edit'
+        );
+
+        return $link;
     }
 
     /**
