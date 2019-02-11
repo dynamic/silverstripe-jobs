@@ -6,6 +6,7 @@ use SilverStripe\AssetAdmin\Forms\UploadField;
 use SilverStripe\Assets\File;
 use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\HeaderField;
 use SilverStripe\Forms\HTMLEditor\HTMLEditorField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\Lumberjack\Model\Lumberjack;
@@ -22,12 +23,12 @@ class JobCollection extends \Page
     /**
      * @var string
      */
-    private static $singular_name = "Job Collection";
+    private static $singular_name = "Job Holder";
 
     /**
      * @var string
      */
-    private static $plural_name = "Job Collection";
+    private static $plural_name = "Job Holders";
 
     /**
      * @var string
@@ -80,20 +81,26 @@ class JobCollection extends \Page
      */
     public function getCMSFields()
     {
-        $fields = parent::getCMSFields();
+        $this->beforeUpdateCMSFields(function ($fields) {
+            $app = new UploadField('Application', 'Application Form');
+            $app
+                ->setDescription('optional - include application file to print and complete manually')
+                ->setFolderName('Uploads/JobApplications')
+                ->setIsMultiUpload(false)
+                ->setAllowedFileCategories('document');
+            $fields->addFieldToTab('Root.ApplicationFile', $app);
 
-        $app = new UploadField('Application', 'Application Form');
-        $app->allowedExtensions = ['pdf', 'PDF'];
-        $fields->addFieldToTab('Root.ApplicationFile', $app);
+            $fields->addFieldsToTab('Root.Notifications', [
+                EmailField::create('FromAddress', 'From Email'),
+                EmailField::create('EmailRecipient', 'Recipient Email'),
+                TextField::create('EmailSubject', 'Subject Line'),
+                HTMLEditorField::create('Message', 'Message')
+                    ->setRows(10)
+                    ->setDescription('will display prior to application info.'),
+            ]);
+        });
 
-        $fields->addFieldsToTab('Root.Configuration', [
-            EmailField::create('FromAddress', 'Submission From Address'),
-            EmailField::create('EmailRecipient', 'Submission Recipient'),
-            TextField::create('EmailSubject', 'Submission Email Subject Line'),
-            HTMLEditorField::create('Message', 'Submission Message'),
-        ]);
-
-        return $fields;
+        return parent::getCMSFields();
     }
 
     /**
@@ -102,16 +109,18 @@ class JobCollection extends \Page
     public function validate()
     {
         $result = parent::validate();
+
         // TODO - this bugs out and won't create the page if it is in
         /*
-                if(!$this->EmailRecipient) {
-                    $result->addError('Please enter Email Recipient before saving.');
-                }
+        if(!$this->EmailRecipient) {
+            $result->addError('Please enter Email Recipient before saving.');
+        }
 
-                if(!$this->EmailSubject) {
-                    $result->addError('Please enter Email Subject before saving.');
-                }
-                */
+        if(!$this->EmailSubject) {
+            $result->addError('Please enter Email Subject before saving.');
+        }
+        */
+
         return $result;
     }
 
@@ -127,5 +136,13 @@ class JobCollection extends \Page
             ])
             ->sort('PostDate DESC');
         return $jobs;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLumberjackTitle()
+    {
+        return 'Jobs';
     }
 }
