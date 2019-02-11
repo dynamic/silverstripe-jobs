@@ -151,57 +151,69 @@ class Job extends Page implements PermissionProvider
      */
     public function getCMSFields()
     {
-        $fields = parent::getCMSFields();
+        $this->beforeUpdateCMSFields(function ($fields) {
+            $fields->dataFieldByName('Title')
+                ->setTitle('Position Name');
 
-        $fields->addFieldsToTab('Root.Details.Info', [
-            DropdownField::create(
-                'PositionType',
-                'Position Type',
-                Job::singleton()->dbObject('PositionType')->enumValues()
-            )->setEmptyString('--select--'),
-            DateField::create('PostDate', 'Position Post Date'),
-            DateField::create('EndPostDate', 'Position Post End Date'),
-        ]);
+            $fields->dataFieldByName('Content')
+                ->setRows(10)
+                ->setTitle('Introduction');
 
-        if ($this->ID) {
-            // sections
-            $config = GridFieldConfig_RelationEditor::create();
-            if (class_exists(GridFieldOrderableRows::class)) {
-                $config->addComponent(new GridFieldOrderableRows('Sort'));
-            }
-            $config->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
-            $config->removeComponentsByType(GridFieldDeleteAction::class);
-            $config->addComponent(new GridFieldDeleteAction(false));
-            $sections = $this->Sections()->sort('Sort');
-            $sectionsField = GridField::create('Sections', 'Sections', $sections, $config);
-            $fields->addFieldsToTab('Root.Details.Sections', [
-                $sectionsField,
+            $fields->addFieldsToTab('Root.Details', [
+                DropdownField::create(
+                    'PositionType',
+                    'Position Type',
+                    Job::singleton()->dbObject('PositionType')->enumValues()
+                )->setEmptyString('--select--'),
+                DateField::create('PostDate', 'Post Start Date')
+                    ->setDescription('Date position should appear on website'),
+                DateField::create('EndPostDate', 'Post End Date')
+                    ->setDescription('Date position should be removed from website'),
             ]);
 
-            // categories
-            $config = GridFieldConfig_RelationEditor::create();
-            if (class_exists(GridFieldOrderableRows::class)) {
-                $config->addComponent(new GridFieldOrderableRows('Sort'));
+            if ($this->ID) {
+                // categories
+                $categoriesField = ListboxField::create(
+                    'Categories',
+                    'Categories',
+                    JobCategory::get()->map()
+                );
+
+                $fields->addFieldsToTab('Root.Details', [
+                    $categoriesField,
+                ]);
+
+                // sections
+                $config = GridFieldConfig_RelationEditor::create();
+                $config
+                    ->addComponent(new GridFieldOrderableRows('Sort'))
+                    ->addComponent(new GridFieldDeleteAction(false))
+                    ->removeComponentsByType(GridFieldAddExistingAutocompleter::class)
+                    ->removeComponentsByType(GridFieldDeleteAction::class);
+
+                $sections = $this->Sections()->sort('Sort');
+                $sectionsField = GridField::create('Sections', 'Sections', $sections, $config)
+                    ->setDescription('ex: Requirements, Education, Duties, etc.');
+                $fields->addFieldsToTab('Root.Main', [
+                    $sectionsField,
+                ]);
+
+                // submissions
+                $config = GridFieldConfig_RelationEditor::create();
+                $config
+                    ->addComponent(new GridFieldDeleteAction(false))
+                    ->removeComponentsByType(GridFieldAddExistingAutocompleter::class)
+                    ->removeComponentsByType(GridFieldDeleteAction::class);
+
+                $submissions = $this->Submissions();
+                $submissionsField = GridField::create('Submissions', 'Submissions', $submissions, $config);
+                $fields->addFieldsToTab('Root.Submissions', [
+                    $submissionsField,
+                ]);
             }
-            if (class_exists(GridFieldAddExistingSearchButton::class)) {
-                $config->removeComponentsByType(GridFieldAddExistingAutocompleter::class);
-                $config->addComponent(new GridFieldAddExistingSearchButton());
-            }
-            $categories = $this->Categories()->sort('Sort');
-            $categoriesField = GridField::create('Categories', 'Categories', $categories, $config);
+        });
 
-            $categoriesField = ListboxField::create(
-                'Categories',
-                'Categories',
-                JobCategory::get()->map()
-            );
-
-            $fields->addFieldsToTab('Root.Details.Categories', [
-                $categoriesField,
-            ]);
-        }
-
-        return $fields;
+        return parent::getCMSFields();
     }
 
     /**
