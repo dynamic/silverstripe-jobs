@@ -13,6 +13,7 @@ use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\Forms\RequiredFields;
+use SilverStripe\View\ArrayData;
 use SilverStripe\View\ViewableData_Customised;
 
 /**
@@ -95,6 +96,8 @@ class JobController extends PageController
         if ($fileField !== null) {
             $file = $fileField->getUpload()->getFile();
             if ($file !== null && $file->exists()) {
+                $file->ShowInSearch = 0;
+                $file->write();
                 $entry->ResumeID = $file->ID;
             }
         }
@@ -106,11 +109,12 @@ class JobController extends PageController
             $body = $this->parent()->EmailMessage;
 
             $email = new Email($from, $to, $subject, $body);
-            $email->setHTMLTemplate('Dynamic\Jobs\Email\JobSubmission')
-                ->setData(
-                    JobSubmission::get()
-                        ->byID($entry->ID)
-                );
+            $email
+                ->setHTMLTemplate('Dynamic\Jobs\Email\JobSubmission')
+                ->setData(new ArrayData(array(
+                    'Submission' => JobSubmission::get()->byID($entry->ID),
+                    'Configuration' => $this->parent(),
+                )));
 
             $email->send();
 

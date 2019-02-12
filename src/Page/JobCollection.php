@@ -96,7 +96,7 @@ class JobCollection extends \Page
                 TextField::create('EmailSubject', 'Subject Line'),
                 HTMLEditorField::create('Message', 'Message')
                     ->setRows(10)
-                    ->setDescription('will display prior to application info.'),
+                    ->setDescription('will display after a successful application submission.'),
             ]);
         });
 
