@@ -39,6 +39,9 @@
         "installer-name": "silverstripe-jobs",
         "branch-alias": {
             "dev-master": "1.0.x-dev"
-        }
+        },
+        "expose": [
+            "javascript"
+        ]
     }
 }
