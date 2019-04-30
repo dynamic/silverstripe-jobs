@@ -7,6 +7,7 @@
                 var wsiwg = $(this);
                 wsiwg.tinymce({
                     theme: "modern",
+                    skin: "silverstripe",
                     theme_advanced_toolbar_location: "top",
                     theme_advanced_buttons1: wsiwg.attr("data-buttons"),
                     theme_advanced_buttons2: "",
