@@ -31,21 +31,6 @@ class Job extends Page implements PermissionProvider
     /**
      * @var string
      */
-    private static $singular_name = 'Job';
-
-    /**
-     * @var string
-     */
-    private static $plural_name = 'Jobs';
-
-    /**
-     * @var string
-     */
-    private static $description = 'Job detail page allowing for application submissions';
-
-    /**
-     * @var string
-     */
     private static $table_name = 'Dynamic_Job';
 
     /**
@@ -147,39 +132,62 @@ class Job extends Page implements PermissionProvider
     }
 
     /**
+     * @param bool $includerelations
+     * @return array
+     */
+    public function fieldLabels($includerelations = true)
+    {
+        $labels = parent::fieldLabels($includerelations);
+
+        $labels['Title'] = _t(__CLASS__ . '.TitleLabel', 'Position Name');
+        $labels['Content'] = _t(__CLASS__ . '.ContentLabel', 'Introduction');
+        $labels['PositionType'] = _t(__CLASS__ . '.PositionTypeLabel', 'Position Type');
+        $labels['PostDate'] = _t(__CLASS__ . '.PostDateLabel', 'Post Start Date');
+        $labels['EndPostDate'] = _t(__CLASS__ . '.EndPostDateLabel', 'Post End Date');
+        $labels['Details'] =  _t(__CLASS__ . '.DetailsTab', "Details");
+        $labels['Submissions'] = _t(__CLASS__ . '.SubmissionsTab', 'Submissions');
+        //$labels['Categories'] = _t(JobCategory::class . '.SlideType', 'Image or Video');
+
+        return $labels;
+    }
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
     {
         $this->beforeUpdateCMSFields(function ($fields) {
-            $fields->dataFieldByName('Title')
-                ->setTitle('Position Name');
-
             $fields->dataFieldByName('Content')
-                ->setRows(10)
-                ->setTitle('Introduction');
+                ->setTitle($this->fieldLabel('Content'))
+                ->setRows(10);
 
-            $fields->addFieldsToTab('Root.Details', [
+            $fields->addFieldsToTab('Root.' . $this->fieldLabel('Details'), [
                 DropdownField::create(
                     'PositionType',
-                    'Position Type',
+                    $this->fieldLabel('PositionType'),
                     Job::singleton()->dbObject('PositionType')->enumValues()
                 )->setEmptyString('--select--'),
-                DateField::create('PostDate', 'Post Start Date')
-                    ->setDescription('Date position should appear on website'),
-                DateField::create('EndPostDate', 'Post End Date')
-                    ->setDescription('Date position should be removed from website'),
+                DateField::create('PostDate', $this->fieldLabel('PostDate'))
+                    ->setDescription(_t(
+                        __CLASS__ . '.PostDateDescription',
+                        'Date position should appear on website'
+                    )),
+                DateField::create('EndPostDate', $this->fieldLabel('EndPostDate'))
+                    ->setDescription(_t(
+                        __CLASS__ . '.EndPostDateDescription',
+                        'Date position should be removed from website'
+                    )),
             ]);
 
             if ($this->ID) {
                 // categories
                 $categoriesField = ListboxField::create(
                     'Categories',
-                    'Categories',
+                    _t(JobCategory::class . '.PLURALNAME', 'Categories'),
                     JobCategory::get()->map()
                 );
 
-                $fields->addFieldsToTab('Root.Details', [
+                $fields->addFieldsToTab('Root.' . $this->fieldLabel('Details'), [
                     $categoriesField,
                 ]);
 
@@ -192,8 +200,17 @@ class Job extends Page implements PermissionProvider
                     ->removeComponentsByType(GridFieldDeleteAction::class);
 
                 $sections = $this->Sections()->sort('Sort');
-                $sectionsField = GridField::create('Sections', 'Sections', $sections, $config)
-                    ->setDescription('ex: Requirements, Education, Duties, etc.');
+                $sectionsField = GridField::create(
+                    'Sections',
+                    _t(JobSection::class . '.PLURALNAME', 'Sections'),
+                    $sections,
+                    $config
+                )
+                    ->setDescription(_t(
+                        __CLASS__ . '.SectionsDescription',
+                        'ex: Requirements, Education, Duties, etc.'
+                    ));
+
                 $fields->addFieldsToTab('Root.Main', [
                     $sectionsField,
                 ]);
@@ -206,8 +223,13 @@ class Job extends Page implements PermissionProvider
                     ->removeComponentsByType(GridFieldDeleteAction::class);
 
                 $submissions = $this->Submissions();
-                $submissionsField = GridField::create('Submissions', 'Submissions', $submissions, $config);
-                $fields->addFieldsToTab('Root.Submissions', [
+                $submissionsField = GridField::create(
+                    'Submissions',
+                    _t(JobSubmission::class . '.PLURALNAME', 'Submissions'),
+                    $submissions,
+                    $config)
+                ;
+                $fields->addFieldsToTab('Root.' . $this->fieldLabel('Submissions'), [
                     $submissionsField,
                 ]);
             }
@@ -264,9 +286,21 @@ class Job extends Page implements PermissionProvider
     public function providePermissions()
     {
         return [
-            'Job_EDIT' => 'Edit a Job',
-            'Job_DELETE' => 'Delete a Job',
-            'Job_CREATE' => 'Create a Job',
+            'JOB_MANAGE' => [
+                'name' => _t(
+                    __CLASS__ . '.JOB_MANAGE',
+                    'Manage Jobs'
+                ),
+                'category' => _t(
+                __CLASS__ . '.JOB_MANAGE_CATEGORY',
+                    'Jobs'
+                ),
+                'help' => _t(
+                    __CLASS__ . '.JOB_MANAGE_HELP',
+                    'Access to add, edit and delete Jobs'
+                ),
+                'sort' => 400,
+            ],
         ];
     }
 
@@ -277,7 +311,7 @@ class Job extends Page implements PermissionProvider
      */
     public function canEdit($member = null)
     {
-        return Permission::check('Job_EDIT', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -287,7 +321,7 @@ class Job extends Page implements PermissionProvider
      */
     public function canDelete($member = null)
     {
-        return Permission::check('Job_DELETE', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -297,16 +331,6 @@ class Job extends Page implements PermissionProvider
      */
     public function canCreate($member = null, $context = [])
     {
-        return Permission::check('Job_CREATE', 'any', $member);
-    }
-
-    /**
-     * @param null $member
-     *
-     * @return bool
-     */
-    public function canView($member = null)
-    {
-        return true;
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 }

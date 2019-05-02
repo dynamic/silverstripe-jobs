@@ -27,21 +27,6 @@ class JobSubmission extends DataObject
     /**
      * @var string
      */
-    private static $singular_name = 'Job Application';
-
-    /**
-     * @var string
-     */
-    private static $plural_name = 'Job Applications';
-
-    /**
-     * @var string
-     */
-    private static $description = 'Online job application allowing for a resume upload';
-
-    /**
-     * @var string
-     */
     private static $table_name = 'Dynamic_JobSubmission';
 
     /**
@@ -73,34 +58,46 @@ class JobSubmission extends DataObject
      * @var array
      */
     private static $summary_fields = [
-        'Name' => 'Applicant',
-        'Job.Title' => 'Job',
-        'Created.Nice' => 'Date',
+        'Name',
+        'Job.Title',
+        'Created.Nice',
     ];
 
     /**
      * @var array
      */
     private static $searchable_fields = [
-        'FirstName' => [
-            'title' => 'First',
-        ],
-        'LastName' => [
-            'title' => 'Last',
-        ],
-        'Job.ID' => [
-            'title' => 'Job',
-        ],
-        'Email' => [
-            'title' => 'Email',
-        ],
-        'Phone' => [
-            'title' => 'Phone',
-        ],
-        'Content' => [
-            'title' => 'Cover Letter',
-        ],
+        'FirstName',
+        'LastName',
+        'Job.ID',
+        'Email',
+        'Phone',
+        'Content',
     ];
+
+    /**
+     * @param bool $includerelations
+     * @return array
+     */
+    public function fieldLabels($includerelations = true)
+    {
+        $labels = parent::fieldLabels($includerelations);
+
+        $labels['Name'] = _t(__CLASS__ . '.NameLabel', 'Applicant');
+        $labels['Job.Title'] = _t(__CLASS__ . '.JobLabel', 'Job');
+        $labels['Job.ID'] = _t(__CLASS__ . '.JobLabel', 'Job');
+        $labels['Created'] = _t(__CLASS__ . '.CreatedLabel', 'Application Date');
+        $labels['Created.Nice'] = _t(__CLASS__ . '.CreatedLabel', 'Application Date');
+        $labels['FirstName'] = _t(__CLASS__ . '.FirstNameLabel', 'First');
+        $labels['LastName'] = _t(__CLASS__ . '.LastNameLabel', 'Last');
+        $labels['Email'] = _t(__CLASS__ . '.EmailLabel', 'Email');
+        $labels['Phone'] = _t(__CLASS__ . '.PhoneLabel', 'Phone');
+        $labels['Available'] = _t(__CLASS__ . '.AvailableLabel', 'Date Available');
+        $labels['Resume'] = _t(__CLASS__ . '.ResumeLabel', 'Resume');
+        $labels['Content'] = _t(__CLASS__ . '.ContentLabel', 'Cover Letter');
+
+        return $labels;
+    }
 
     /**
      * @return string
@@ -184,12 +181,12 @@ class JobSubmission extends DataObject
         ]);
 
         $fields->insertBefore(
-            ReadonlyField::create('JobTitle', 'Job', $this->Job()->getTitle()),
+            ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle()),
             'Content'
         );
 
         $fields->insertBefore(
-            ReadonlyField::create('Created', 'Application Date', $this->dbObject('Created')->FormatFromSettings()),
+            ReadonlyField::create('Created', $this->fieldLabel('Created'), $this->dbObject('Created')->FormatFromSettings()),
             'Content'
         );
 
@@ -219,7 +216,7 @@ class JobSubmission extends DataObject
      */
     public function canEdit($member = null)
     {
-        return Permission::check('Job_EDIT', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -229,7 +226,7 @@ class JobSubmission extends DataObject
      */
     public function canDelete($member = null)
     {
-        return Permission::check('Job_DELETE', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -239,7 +236,7 @@ class JobSubmission extends DataObject
      */
     public function canCreate($member = null, $contect = [])
     {
-        return Permission::check('Job_CREATE', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -249,6 +246,6 @@ class JobSubmission extends DataObject
      */
     public function canView($member = null)
     {
-        return true;
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 }

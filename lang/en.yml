@@ -1,0 +1,69 @@
+en:
+  Dynamic\Jobs\Admin\JobAdmin:
+    MENUTITLE: Jobs
+
+  Dynamic\Jobs\Model\JobCategory:
+    NameDescription: 'For internal reference only'
+    NameLabel: 'Name'
+    PLURALNAME: Categories
+    PLURALS:
+      one: 'A Category'
+      other: '{count} Categories'
+    SINGULARNAME: Category
+    TitleLabel: 'Title'
+
+  Dynamic\Jobs\Model\JobSection:
+    NameLabel: 'Name'
+    PLURALNAME: Sections
+    PLURALS:
+      one: 'A Section'
+      other: '{count} Sections'
+    SINGULARNAME: Section
+    TitleLabel: 'Title'
+
+  Dynamic\Jobs\Model\JobSubmission:
+    AvailableLabel: 'Date Available'
+    CreatedLabel: 'Application Date'
+    ContentLabel: 'Cover Letter'
+    DESCRIPTION: 'Online job application allowing for a resume upload'
+    EmailLabel: 'Email'
+    FirstNameLabel: 'First'
+    JobLabel: 'Job'
+    LastNameLabel: 'Last'
+    NameLabel: 'Applicant'
+    PhoneLabel: 'Phone'
+    PLURALNAME: 'Job Applications'
+    PLURALS:
+      one: 'A Job Application'
+      other: '{count} Job Applications'
+    ResumeLabel: 'Resume'
+    SINGULARNAME: 'Job Application'
+
+  Dynamic\Jobs\Page\Job:
+    ContentLabel: 'Introduction'
+    DESCRIPTION: 'Job detail page allowing for application submissions'
+    DetailsTab: 'Details'
+    EndPostDateDescription: 'Date position should be removed from website'
+    EndPostDateLabel: 'Post End Date'
+    JOB_MANAGE: 'Manage Jobs'
+    JOB_MANAGE_CATEGORY: 'Jobs'
+    JOB_MANAGE_HELP: 'Access to add, edit and delete Jobs'
+    PLURALNAME: Jobs
+    PLURALS:
+      one: 'A Job'
+      other: '{count} Jobs'
+    PositionTypeLabel: 'Position Type'
+    PostDateDescription: 'Date position should appear on website'
+    PostDateLabel: 'Post Start Date'
+    SectionsDescription: 'ex: Requirements, Education, Duties, etc.'
+    SINGULARNAME: Job
+    SubmissionsTab: 'Submissions'
+    TitleLabel: 'Position Name'
+
+  Dynamic\Jobs\Page\JobCollection:
+    DESCRIPTION: 'Display a list of available jobs'
+    PLURALNAME: 'Job Holders'
+    PLURALS:
+      one: 'A Job Holder'
+      other: '{count} Job Holders'
+    SINGULARNAME: 'Job Holder'
