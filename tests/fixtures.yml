@@ -2,15 +2,9 @@ SilverStripe\Security\Member:
   Admin:
     FirstName: Test
     Surname: Administrator
-  Create:
-    FirstName: Test
-    Surname: Editor
-  Edit:
-    FirstName: Blog
-    Surname: Editor
-  Delete:
-    FirstName: Blog
-    Surname: Writer
+  Manager:
+    FirstName: Job
+    Surname: Manager
   Visitor:
     FirstName: Blog
     Surname: Visitor
@@ -20,32 +14,17 @@ SilverStripe\Security\Group:
     Title: Administrators
     Members:
       - =>SilverStripe\Security\Member.Admin
-  Create:
-    Title: Create
-    Members:
-      - =>SilverStripe\Security\Member.Create
-  Edit:
-    Title: Edit
-    Members:
-      - =>SilverStripe\Security\Member.Edit
-  Delete:
-    Title: Delete
-    Members:
-      - =>SilverStripe\Security\Member.Delete
+  Manage:
+    Title: Manage
+    Members: =>SilverStripe\Security\Member.Manager
 
 SilverStripe\Security\Permission:
   Administrators:
     Code: ADMIN
     Group: =>SilverStripe\Security\Group.Administrators
-  Create:
-    Code: Job_CREATE
-    Group: =>SilverStripe\Security\Group.Create
-  Edit:
-    Code: Job_EDIT
-    Group: =>SilverStripe\Security\Group.Edit
-  Delete:
-    Code: Job_DELETE
-    Group: =>SilverStripe\Security\Group.Delete
+  Manage:
+    Code: JOB_MANAGE
+    Group: =>SilverStripe\Security\Group.Manage
 
 SilverStripe\Assets\File:
   File:
