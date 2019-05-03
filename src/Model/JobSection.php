@@ -17,16 +17,6 @@ class JobSection extends DataObject
     /**
      * @var string
      */
-    private static $singular_name = 'Section';
-
-    /**
-     * @var string
-     */
-    private static $plural_name = 'Sections';
-
-    /**
-     * @var string
-     */
     private static $table_name = 'Dynamic_JobSection';
 
     /**
@@ -69,6 +59,20 @@ class JobSection extends DataObject
     ];
 
     /**
+     * @param bool $includerelations
+     * @return array
+     */
+    public function fieldLabels($includerelations = true)
+    {
+        $labels = parent::fieldLabels($includerelations);
+
+        $labels['Name'] = _t(__CLASS__ . '.NameLabel', 'Name');
+        $labels['Title'] = _t(__CLASS__ . '.TitleLabel', 'Title');
+
+        return $labels;
+    }
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
@@ -106,7 +110,7 @@ class JobSection extends DataObject
      */
     public function canEdit($member = null)
     {
-        return Permission::check('Job_EDIT', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -116,7 +120,7 @@ class JobSection extends DataObject
      */
     public function canDelete($member = null)
     {
-        return Permission::check('Job_DELETE', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -126,7 +130,7 @@ class JobSection extends DataObject
      */
     public function canCreate($member = null, $context = [])
     {
-        return Permission::check('Job_CREATE', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -136,6 +140,6 @@ class JobSection extends DataObject
      */
     public function canView($member = null)
     {
-        return true;
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 }

@@ -90,15 +90,11 @@ class JobSubmissionTest extends SapphireTest
         $object = Injector::inst()->create(JobSubmission::class);
 
         $admin = $this->objFromFixture(Member::class, 'Admin');
-        $create = $this->objFromFixture(Member::class, 'Create');
-        $edit = $this->objFromFixture(Member::class, 'Edit');
-        $delete = $this->objFromFixture(Member::class, 'Delete');
+        $manage = $this->objFromFixture(Member::class, 'Manager');
         $visitor = $this->objFromFixture(Member::class, 'Visitor');
 
         $this->assertTrue($object->canCreate($admin));
-        $this->assertTrue($object->canCreate($create));
-        $this->assertFalse($object->canCreate($edit));
-        $this->assertFalse($object->canCreate($delete));
+        $this->assertTrue($object->canCreate($manage));
         $this->assertFalse($object->canCreate($visitor));
     }
 
@@ -111,15 +107,11 @@ class JobSubmissionTest extends SapphireTest
         $object = Injector::inst()->create(JobSubmission::class);
 
         $admin = $this->objFromFixture(Member::class, 'Admin');
-        $create = $this->objFromFixture(Member::class, 'Create');
-        $edit = $this->objFromFixture(Member::class, 'Edit');
-        $delete = $this->objFromFixture(Member::class, 'Delete');
+        $manage = $this->objFromFixture(Member::class, 'Manager');
         $visitor = $this->objFromFixture(Member::class, 'Visitor');
 
         $this->assertTrue($object->canEdit($admin));
-        $this->assertFalse($object->canEdit($create));
-        $this->assertTrue($object->canEdit($edit));
-        $this->assertFalse($object->canEdit($delete));
+        $this->assertTrue($object->canEdit($manage));
         $this->assertFalse($object->canEdit($visitor));
     }
 
@@ -132,15 +124,11 @@ class JobSubmissionTest extends SapphireTest
         $object = Injector::inst()->create(JobSubmission::class);
 
         $admin = $this->objFromFixture(Member::class, 'Admin');
-        $create = $this->objFromFixture(Member::class, 'Create');
-        $edit = $this->objFromFixture(Member::class, 'Edit');
-        $delete = $this->objFromFixture(Member::class, 'Delete');
+        $manage = $this->objFromFixture(Member::class, 'Manager');
         $visitor = $this->objFromFixture(Member::class, 'Visitor');
 
         $this->assertTrue($object->canDelete($admin));
-        $this->assertFalse($object->canDelete($create));
-        $this->assertFalse($object->canDelete($edit));
-        $this->assertTrue($object->canDelete($delete));
+        $this->assertTrue($object->canDelete($manage));
         $this->assertFalse($object->canDelete($visitor));
     }
 
@@ -151,6 +139,7 @@ class JobSubmissionTest extends SapphireTest
     {
         /** @var JobSubmission $object */
         $object = Injector::inst()->create(JobSubmission::class);
-        $this->assertTrue($object->canView());
+        $manage = $this->objFromFixture(Member::class, 'Manager');
+        $this->assertTrue($object->canView($manage));
     }
 }

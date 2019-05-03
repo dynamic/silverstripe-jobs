@@ -17,16 +17,6 @@ class JobCategory extends DataObject
     /**
      * @var string
      */
-    private static $singular_name = 'Category';
-
-    /**
-     * @var string
-     */
-    private static $plural_name = 'Categories';
-
-    /**
-     * @var string
-     */
     private static $table_name = 'Dynamic_JobCategory';
 
     /**
@@ -61,13 +51,32 @@ class JobCategory extends DataObject
     ];
 
     /**
+     * @param bool $includerelations
+     * @return array
+     */
+    public function fieldLabels($includerelations = true)
+    {
+        $labels = parent::fieldLabels($includerelations);
+
+        $labels['Name'] = _t(__CLASS__ . '.NameLabel', 'Name');
+        $labels['Title'] = _t(__CLASS__ . '.TitleLabel', 'Title');
+        $labels['Jobs'] = _t(Job::class . '.PLURALNAME', 'Jobs');
+
+        return $labels;
+    }
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
 
-        $fields->dataFieldByName('Name')->setDescription('For internal reference only');
+        $fields->dataFieldByName('Name')
+            ->setDescription(_t(
+                __CLASS__ . '.NameDescription',
+                'For internal reference only'
+            ));
 
         if ($this->ID) {
             $fields->dataFieldByName('Jobs')->getConfig()
@@ -84,7 +93,7 @@ class JobCategory extends DataObject
      */
     public function canEdit($member = null)
     {
-        return Permission::check('Job_EDIT', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -94,7 +103,7 @@ class JobCategory extends DataObject
      */
     public function canDelete($member = null)
     {
-        return Permission::check('Job_DELETE', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -104,7 +113,7 @@ class JobCategory extends DataObject
      */
     public function canCreate($member = null, $context = [])
     {
-        return Permission::check('Job_CREATE', 'any', $member);
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 
     /**
@@ -114,6 +123,6 @@ class JobCategory extends DataObject
      */
     public function canView($member = null)
     {
-        return true;
+        return Permission::check('JOB_MANAGE', 'any', $member);
     }
 }
