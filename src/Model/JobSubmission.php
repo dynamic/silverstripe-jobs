@@ -186,7 +186,11 @@ class JobSubmission extends DataObject
         );
 
         $fields->insertBefore(
-            ReadonlyField::create('Created', $this->fieldLabel('Created'), $this->dbObject('Created')->FormatFromSettings()),
+            ReadonlyField::create(
+                'Created',
+                $this->fieldLabel('Created'),
+                $this->dbObject('Created')->FormatFromSettings()
+            ),
             'Content'
         );
 

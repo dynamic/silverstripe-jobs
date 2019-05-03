@@ -227,7 +227,8 @@ class Job extends Page implements PermissionProvider
                     'Submissions',
                     _t(JobSubmission::class . '.PLURALNAME', 'Submissions'),
                     $submissions,
-                    $config)
+                    $config
+                )
                 ;
                 $fields->addFieldsToTab('Root.' . $this->fieldLabel('Submissions'), [
                     $submissionsField,
@@ -292,7 +293,7 @@ class Job extends Page implements PermissionProvider
                     'Manage Jobs'
                 ),
                 'category' => _t(
-                __CLASS__ . '.JOB_MANAGE_CATEGORY',
+                    __CLASS__ . '.JOB_MANAGE_CATEGORY',
                     'Jobs'
                 ),
                 'help' => _t(
