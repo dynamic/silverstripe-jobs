@@ -115,11 +115,24 @@ class ElementJobListings extends BaseElement
      */
     public function getPostsList()
     {
-        $jobs = Job::get()
+        $now = DBDatetime::now();
+
+        $jobsRestricted = Job::get()
             ->filter([
-                'PostDate:LessThanOrEqual' => DBDatetime::now(),
-                'EndPostDate:GreaterThanOrEqual' => DBDatetime::now(),
+                'PostDate:LessThanOrEqual' => $now,
+                'EndPostDate:GreaterThanOrEqual' => $now,
             ]);
+
+        $jobsUnrestricted = Job::get()->filter([
+            'PostDate:LessThanOrEqual' => $now,
+            'EndPostDate' => [null, ''],
+        ]);
+
+        $jobs = Job::get()
+            ->byIDs(array_merge(
+                array_values($jobsRestricted->column()),
+                array_values($jobsUnrestricted->column())
+            ));
 
         /** Specific parent to pull from */
         if ($this->JobCollectionID) {
@@ -131,7 +144,7 @@ class ElementJobListings extends BaseElement
             $jobs = $jobs->filter('Categories.ID', [$this->CategoryID]);
         }
 
-        $this->extend('updateGetPostsList', $posts);
+        $this->extend('updateGetPostsList', $jobs);
 
         return $jobs->count()
             ? $jobs->sort('PostDate DESC')
