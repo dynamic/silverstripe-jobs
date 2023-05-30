@@ -36,10 +36,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "extra": {
-        "installer-name": "silverstripe-jobs",
-        "branch-alias": {
-            "dev-master": "1.0.x-dev"
-        },
         "expose": [
             "javascript"
         ]
