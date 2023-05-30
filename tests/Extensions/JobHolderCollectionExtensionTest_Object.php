@@ -14,6 +14,8 @@ use SilverStripe\ORM\DataObject;
  */
 class JobHolderCollectionExtensionTest_Object extends DataObject implements TestOnly
 {
+    protected static $fixture_file = '../fixtures.yml';
+    
     /**
      * Needs its own table (table too long otherwise)
      *
