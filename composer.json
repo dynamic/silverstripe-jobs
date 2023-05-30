@@ -14,11 +14,11 @@
     "type": "silverstripe-vendormodule",
     "license": "BSD-3-Clause",
     "require": {
-        "silverstripe/recipe-cms": "^1.0@dev || ^4.0@dev",
-        "silverstripe/vendor-plugin": "^1.0@dev",
-        "dynamic/silverstripe-collection": "^2.0@dev",
-        "silverstripe/lumberjack": "^2.0@dev",
-        "symbiote/silverstripe-gridfieldextensions": "^3@dev"
+        "silverstripe/recipe-cms": "^4",
+        "silverstripe/vendor-plugin": "^1",
+        "dynamic/silverstripe-collection": "^2",
+        "silverstripe/lumberjack": "^2",
+        "symbiote/silverstripe-gridfieldextensions": "^3"
     },
     "require-dev": {
         "silverstripe/recipe-testing": "^2",
