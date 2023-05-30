@@ -24,7 +24,7 @@ class JobCollectionTest extends SapphireTest
     /**
      * {@inheritdoc}
      */
-    public function tearDown(): void 
+    public function tearDown(): void
     {
         DBDatetime::clear_mock_now();
         parent::tearDown();
