@@ -4,7 +4,6 @@ namespace Dynamic\Jobs\Page;
 
 use \PageController;
 use SilverStripe\ORM\PaginatedList;
-use SilverStripe\Control\HTTPRequest;
 
 /**
  * Class JobCollectionController
@@ -16,19 +15,13 @@ class JobCollectionController extends PageController
      * @param HTTPRequest|null $request
      * @return PaginatedList
      */
-    public function PaginatedList(HTTPRequest $request = null)
+    public function PaginatedList()
     {
-        if ($request === null) {
-            $request = $this->owner->request;
-        }
-        $start = ($request->getVar('start')) ? (int) $request->getVar('start') : 0;
-
-        $records = PaginatedList::create($this->data()->getPostedJobs(), $this->owner->request);
-        $records->setPageStart($start);
-        $records->setPageLength($this->data()->getCollectionSize());
+        $records = PaginatedList::create($this->data()->getPostedJobs(), $this->getRequest());
+        $records->setPageLength($this->data()->PageSize);
 
         // allow $records to be updated via extension
-        $this->owner->extend('updatePaginatedList', $records);
+        $this->extend('updatePaginatedList', $records);
 
         return $records;
     }

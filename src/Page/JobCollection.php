@@ -48,6 +48,7 @@ class JobCollection extends \Page
         'FromAddress' => 'Varchar(255)',
         'EmailRecipient' => 'Varchar(255)',
         'EmailSubject' => 'Varchar(255)',
+        'PageSize' => 'Int',
     ];
 
     /**
@@ -77,9 +78,11 @@ class JobCollection extends \Page
     ];
 
     /**
-     * @var string
+     * @var array
      */
-    private static $page_size = 10;
+    private static $defaults = [
+        'PageSize' => 10
+    ];
 
     /**
      * @return FieldList
@@ -102,6 +105,12 @@ class JobCollection extends \Page
                 HTMLEditorField::create('Message', 'Message')
                     ->setRows(10)
                     ->setDescription('will display after a successful application submission.'),
+            ]);
+
+            $fields->addFieldsToTab('Root.Settings', [
+                HeaderField::create('SettingsHeader', 'Settings'),
+                TextField::create('PageSize', 'Page Size')
+                    ->setDescription('Number of jobs to display per page.'),
             ]);
         });
 
