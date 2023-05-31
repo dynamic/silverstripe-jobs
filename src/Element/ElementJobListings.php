@@ -59,13 +59,6 @@ class ElementJobListings extends BaseElement
     ];
 
     /**
-     * @var string[]
-     */
-    private static $many_many = [
-        'Jobs' => Job::class,
-    ];
-
-    /**
      * @var array
      */
     private static $defaults = [
