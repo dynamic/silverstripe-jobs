@@ -144,6 +144,10 @@ class ElementJobListings extends BaseElement
             $jobs = $jobs->filter('Categories.ID', [$this->CategoryID]);
         }
 
+        if ($this->Limit) {
+            $jobs = $jobs->limit($this->Limit);
+        }
+
         $this->extend('updateGetPostsList', $jobs);
 
         return $jobs->count()
