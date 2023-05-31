@@ -77,6 +77,11 @@ class JobCollection extends \Page
     ];
 
     /**
+     * @var string
+     */
+    private static $page_size = 10;
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
@@ -136,6 +141,14 @@ class JobCollection extends \Page
             ])
             ->sort('PostDate DESC');
         return $jobs;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCollectionSize()
+    {
+        return $this->config()->get('page_size');
     }
 
     /**

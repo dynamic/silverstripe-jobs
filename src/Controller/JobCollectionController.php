@@ -13,18 +13,6 @@ use SilverStripe\Control\HTTPRequest;
 class JobCollectionController extends PageController
 {
     /**
-     * @return int
-     */
-    public function getCollectionSize()
-    {
-        if ($object = $this->owner->config()->page_size) {
-            return (int) $object;
-        }
-
-        return 10;
-    }
-
-    /**
      * @param HTTPRequest|null $request
      * @return PaginatedList
      */
@@ -37,7 +25,7 @@ class JobCollectionController extends PageController
 
         $records = PaginatedList::create($this->data()->getPostedJobs(), $this->owner->request);
         $records->setPageStart($start);
-        $records->setPageLength($this->getCollectionSize());
+        $records->setPageLength($this->data()->getCollectionSize());
 
         // allow $records to be updated via extension
         $this->owner->extend('updatePaginatedList', $records);
