@@ -6,7 +6,6 @@ use DNADesign\Elemental\Models\BaseElement;
 use Dynamic\Jobs\Model\JobCategory;
 use Dynamic\Jobs\Page\Job;
 use Dynamic\Jobs\Page\JobCollection;
-use SilverStripe\Forms\DropdownField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataList;
@@ -48,6 +47,7 @@ class ElementJobListings extends BaseElement
     private static $db = [
         'Limit' => 'Int',
         'Content' => 'HTMLText',
+        'PositionType' => "Enum(array('', 'Full-time', 'Part-time', 'Freelance', 'Internship'))",
     ];
 
     /**
@@ -96,12 +96,16 @@ class ElementJobListings extends BaseElement
                     ->setEmptyString('')
             );
 
-            $fields->insertAfter(
-                'BlogID',
-                DropdownField::create('CategoryID', _t(
-                    __CLASS__ . 'CategoryLabel',
-                    'Category'
-                ))
+            $fields->insertBefore(
+                'Limit',
+                $fields->dataFieldByName('CategoryID')
+                    ->setHasEmptyDefault(true)
+                    ->setEmptyString('')
+            );
+
+            $fields->insertBefore(
+                'Limit',
+                $fields->dataFieldByName('PositionType')
                     ->setHasEmptyDefault(true)
                     ->setEmptyString('')
             );
@@ -146,6 +150,10 @@ class ElementJobListings extends BaseElement
 
         if ($this->Limit) {
             $jobs = $jobs->limit($this->Limit);
+        }
+
+        if ($this->PositionType) {
+            $jobs = $jobs->filter('PositionType', $this->PositionType);
         }
 
         $this->extend('updateGetPostsList', $jobs);
