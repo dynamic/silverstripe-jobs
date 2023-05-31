@@ -108,7 +108,6 @@ class JobCollection extends \Page
             ]);
 
             $fields->addFieldsToTab('Root.Settings', [
-                HeaderField::create('SettingsHeader', 'Settings'),
                 TextField::create('PageSize', 'Page Size')
                     ->setDescription('Number of jobs to display per page.'),
             ]);
