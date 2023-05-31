@@ -16,7 +16,18 @@ use SilverStripe\ORM\ValidationResult;
 
 /**
  * Class JobCollection
- * @package Dynamic\Jobs\Model
+ *
+ * @property string $Message
+ * @property string $FromAddress
+ * @property string $EmailRecipient
+ * @property string $EmailSubject
+ * @property int $PageSize
+ * @property int $HeaderImageID
+ * @property int $ApplicationID
+ * @method HeaderImage HeaderImage()
+ * @method File Application()
+ * @mixin Lumberjack
+ * @mixin HeaderImageExtension
  */
 class JobCollection extends \Page
 {

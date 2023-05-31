@@ -10,7 +10,13 @@ use SilverStripe\Security\Permission;
 
 /**
  * Class JobSection
- * @package Dynamic\Jobs\Model
+ *
+ * @property string $Name
+ * @property string $Title
+ * @property string $Content
+ * @property int $Sort
+ * @property int $JobID
+ * @method Job Job()
  */
 class JobSection extends DataObject
 {

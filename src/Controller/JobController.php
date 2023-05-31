@@ -18,7 +18,11 @@ use SilverStripe\View\ViewableData_Customised;
 
 /**
  * Class JobController
- * @package Dynamic\Jobs\Model
+ *
+ * @property Job $dataRecord
+ * @method Job data()
+ * @mixin Job
+ * @mixin JobControllerExtension
  */
 class JobController extends PageController
 {

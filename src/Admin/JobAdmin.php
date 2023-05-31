@@ -8,7 +8,7 @@ use SilverStripe\Admin\ModelAdmin;
 
 /**
  * Class JobAdmin
- * @package Dynamic\Jobs\Admin
+ *
  */
 class JobAdmin extends ModelAdmin
 {

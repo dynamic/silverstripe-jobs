@@ -7,7 +7,10 @@ use SilverStripe\ORM\PaginatedList;
 
 /**
  * Class JobCollectionController
- * @package Dynamic\Jobs\Model
+ *
+ * @property JobCollection $dataRecord
+ * @method JobCollection data()
+ * @mixin JobCollection
  */
 class JobCollectionController extends PageController
 {
