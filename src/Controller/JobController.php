@@ -75,6 +75,7 @@ class JobController extends PageController
             'Phone',
         ]);
 
+        $this->extend('updateJobAppForm', $fields, $actions, $required);
 
         return Form::create($this, "JobApp", $fields, $actions, $required);
     }
