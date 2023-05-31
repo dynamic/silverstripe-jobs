@@ -15,6 +15,9 @@ use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\ListboxField;
+use SilverStripe\Forms\TreeMultiselectField;
+use SilverStripe\ORM\HasManyList;
+use SilverStripe\ORM\ManyManyList;
 use SilverStripe\ORM\Search\SearchContext;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
@@ -23,6 +26,15 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 /**
  * Class Job
  * @package Dynamic\Jobs\Model
+ *
+ * @property string $PositionType
+ * @property string $PostDate
+ * @property string $EndPostDate
+ *
+ * @method HasManyList Sections()
+ * @method HasManyList Submissions()
+ *
+ * @method ManyManyList Categories()
  */
 class Job extends Page implements PermissionProvider
 {
