@@ -25,16 +25,16 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 /**
  * Class Job
- * @package Dynamic\Jobs\Model
  *
  * @property string $PositionType
  * @property string $PostDate
  * @property string $EndPostDate
- *
- * @method HasManyList Sections()
- * @method HasManyList Submissions()
- *
- * @method ManyManyList Categories()
+ * @property int $HeaderImageID
+ * @method HeaderImage HeaderImage()
+ * @method DataList|JobSection[] Sections()
+ * @method DataList|JobSubmission[] Submissions()
+ * @method ManyManyList|JobCategory[] Categories()
+ * @mixin HeaderImageExtension
  */
 class Job extends Page implements PermissionProvider
 {

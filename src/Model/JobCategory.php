@@ -11,12 +11,10 @@ use SilverStripe\Security\Permission;
 
 /**
  * Class JobCategory
- * @package Dynamic\Jobs\Model
  *
  * @property string $Name
  * @property string $Title
- *
- * @method ManyManyList Jobs()
+ * @method ManyManyList|Job[] Jobs()
  */
 class JobCategory extends DataObject
 {

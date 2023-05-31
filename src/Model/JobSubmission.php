@@ -20,7 +20,20 @@ use SilverStripe\Security\Permission;
 
 /**
  * Class JobSubmission
- * @package Dynamic\Jobs\Model
+ *
+ * @property string $LinkedIn
+ * @property string $Portfolio
+ * @property string $FirstName
+ * @property string $LastName
+ * @property string $Email
+ * @property string $Phone
+ * @property string $Available
+ * @property string $Content
+ * @property int $JobID
+ * @property int $ResumeID
+ * @method Job Job()
+ * @method File Resume()
+ * @mixin JobSubmissionDataExtension
  */
 class JobSubmission extends DataObject
 {
@@ -174,31 +187,31 @@ class JobSubmission extends DataObject
      */
     public function getCMSFields()
     {
-        $fields = parent::getCMSFields();
+        $this->beforeUpdateCMSFields(function (FieldList $fields) {
+            $fields->removeByName([
+                'JobID',
+            ]);
+    
+            $fields->insertBefore(
+                ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle()),
+                'Content'
+            );
+    
+            $fields->insertBefore(
+                ReadonlyField::create(
+                    'Created',
+                    $this->fieldLabel('Created'),
+                    $this->dbObject('Created')->FormatFromSettings()
+                ),
+                'Content'
+            );
+    
+            $resume = $fields->dataFieldByName('Resume')
+                ->setFolderName('Uploads/Resumes');
+            $fields->insertBefore($resume, 'Content');
+        });
 
-        $fields->removeByName([
-            'JobID',
-        ]);
-
-        $fields->insertBefore(
-            ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle()),
-            'Content'
-        );
-
-        $fields->insertBefore(
-            ReadonlyField::create(
-                'Created',
-                $this->fieldLabel('Created'),
-                $this->dbObject('Created')->FormatFromSettings()
-            ),
-            'Content'
-        );
-
-        $resume = $fields->dataFieldByName('Resume')
-            ->setFolderName('Uploads/Resumes');
-        $fields->insertBefore($resume, 'Content');
-
-        return $fields;
+        return parent::getCMSFields();
     }
 
     public function getEditLink()

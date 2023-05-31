@@ -19,14 +19,13 @@ if (!class_exists(BaseElement::class)) {
 
 /**
  * Class ElementJobListings
- * @package Dynamic\Jobs\Element
  *
  * @property int $Limit
  * @property string $Content
- *
+ * @property string $PositionType
  * @property int $JobCollectionID
  * @property int $CategoryID
- * @method JobCollection Blog()
+ * @method JobCollection JobCollection()
  * @method JobCategory Category()
  */
 class ElementJobListings extends BaseElement
