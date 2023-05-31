@@ -15,11 +15,9 @@ use SilverStripe\Forms\GridField\GridFieldAddExistingAutocompleter;
 use SilverStripe\Forms\GridField\GridFieldConfig_RelationEditor;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\ListboxField;
-use SilverStripe\Forms\TreeMultiselectField;
 use SilverStripe\ORM\Search\SearchContext;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\PermissionProvider;
-use Symbiote\GridFieldExtensions\GridFieldAddExistingSearchButton;
 use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 
 /**
@@ -32,6 +30,16 @@ class Job extends Page implements PermissionProvider
      * @var string
      */
     private static $table_name = 'Dynamic_Job';
+
+    /**
+     * @var string
+     */
+    private static $singular_name = 'Job';
+
+    /**
+     * @var string
+     */
+    private static $plural_name = 'Jobs';
 
     /**
      * @var array
@@ -98,6 +106,11 @@ class Job extends Page implements PermissionProvider
      * @var array
      */
     private static $allowed_children = [];
+
+    /**
+     * @var string
+     */
+    private static $default_sort = '"PostDate" DESC, "LastEdited" DESC';
 
     /**
      * @return SearchContext

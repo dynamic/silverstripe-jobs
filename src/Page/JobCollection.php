@@ -147,8 +147,10 @@ class JobCollection extends \Page
             ->filter([
                 'PostDate:LessThanOrEqual' => DBDatetime::now(),
                 'EndPostDate:GreaterThanOrEqual' => DBDatetime::now(),
-            ])
-            ->sort('PostDate DESC');
+            ]);
+
+        $this->extend('updatePostedJobs', $jobs);
+
         return $jobs;
     }
 
