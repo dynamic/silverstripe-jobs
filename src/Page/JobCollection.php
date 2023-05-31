@@ -153,14 +153,6 @@ class JobCollection extends \Page
     }
 
     /**
-     * @return int
-     */
-    public function getCollectionSize()
-    {
-        return $this->config()->get('page_size');
-    }
-
-    /**
      * @return string
      */
     public function getLumberjackTitle()
