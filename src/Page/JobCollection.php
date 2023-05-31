@@ -48,6 +48,7 @@ class JobCollection extends \Page
         'FromAddress' => 'Varchar(255)',
         'EmailRecipient' => 'Varchar(255)',
         'EmailSubject' => 'Varchar(255)',
+        'PageSize' => 'Int',
     ];
 
     /**
@@ -77,6 +78,13 @@ class JobCollection extends \Page
     ];
 
     /**
+     * @var array
+     */
+    private static $defaults = [
+        'PageSize' => 10
+    ];
+
+    /**
      * @return FieldList
      */
     public function getCMSFields()
@@ -97,6 +105,11 @@ class JobCollection extends \Page
                 HTMLEditorField::create('Message', 'Message')
                     ->setRows(10)
                     ->setDescription('will display after a successful application submission.'),
+            ]);
+
+            $fields->addFieldsToTab('Root.Settings', [
+                TextField::create('PageSize', 'Page Size')
+                    ->setDescription('Number of jobs to display per page.'),
             ]);
         });
 
@@ -133,8 +146,10 @@ class JobCollection extends \Page
             ->filter([
                 'PostDate:LessThanOrEqual' => DBDatetime::now(),
                 'EndPostDate:GreaterThanOrEqual' => DBDatetime::now(),
-            ])
-            ->sort('PostDate DESC');
+            ]);
+
+        $this->extend('updatePostedJobs', $jobs);
+
         return $jobs;
     }
 

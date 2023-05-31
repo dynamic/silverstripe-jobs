@@ -10,14 +10,14 @@
 
 	<% if $Message %><h4>$Message</h4><% end_if %>
 
-	<% if $Children %>
-		<% loop $Children %>
+	<% if $PaginatedList %>
+		<% loop $PaginatedList %>
 			<section class="row $EvenOdd clearfix">
 				<% include Dynamic\Jobs\JobSummary %>
 			</section>
 		<% end_loop %>
 
-		<% with $Items %>
+		<% with $PaginatedList %>
 			<% include Pagination %>
 		<% end_with %>
 	<% else %>
