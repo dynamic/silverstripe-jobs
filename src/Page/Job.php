@@ -26,6 +26,7 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
 /**
  * Class Job
  *
+ * @property string $PositionLocation
  * @property string $PositionType
  * @property string $PostDate
  * @property string $EndPostDate
@@ -35,6 +36,7 @@ use Symbiote\GridFieldExtensions\GridFieldOrderableRows;
  * @method DataList|JobSubmission[] Submissions()
  * @method ManyManyList|JobCategory[] Categories()
  * @mixin HeaderImageExtension
+ * @mixin JobDataExtension
  */
 class Job extends Page implements PermissionProvider
 {

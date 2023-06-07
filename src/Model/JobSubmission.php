@@ -23,6 +23,7 @@ use SilverStripe\Security\Permission;
  *
  * @property string $LinkedIn
  * @property string $Portfolio
+ * @property bool $LocationAgreement
  * @property string $FirstName
  * @property string $LastName
  * @property string $Email
@@ -71,7 +72,10 @@ class JobSubmission extends DataObject
      * @var array
      */
     private static $summary_fields = [
-        'Name',
+        'FirstName',
+        'LastName',
+        'Email',
+        'Phone',
         'Job.Title',
         'Created.Nice',
     ];
@@ -82,7 +86,7 @@ class JobSubmission extends DataObject
     private static $searchable_fields = [
         'FirstName',
         'LastName',
-        'Job.ID',
+        'JobID',
         'Email',
         'Phone',
         'Content',
