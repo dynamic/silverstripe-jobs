@@ -21,7 +21,13 @@ class JobSubmissionForm extends Form
      * @param FieldList|null $actions
      * @param Validator|null $validator
      */
-    public function __construct(RequestHandler $controller = null, $name = self::DEFAULT_NAME, FieldList $fields = null, FieldList $actions = null, Validator $validator = null)
+    public function __construct(
+        RequestHandler $controller = null,
+        $name = self::DEFAULT_NAME,
+        FieldList $fields = null,
+        FieldList $actions = null,
+        Validator $validator = null
+    )
     {
         $ResumeField = FileField::create('Resume')
             ->setTitle('Resume');
