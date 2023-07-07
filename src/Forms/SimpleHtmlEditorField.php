@@ -69,7 +69,10 @@ class SimpleHtmlEditorField extends TextareaField
      */
     public function FieldHolder($attributes = [])
     {
-        Requirements::javascript("silverstripe/admin: thirdparty/jquery-query/jquery.query.js");
+        if (!$this->config()->get('disable_jquery_requirement')) {
+            Requirements::javascript("//code.jquery.com/jquery-1.7.2.min.js");
+        }
+
         Requirements::javascript("silverstripe/admin: thirdparty/tinymce/jquery.tinymce.min.js");
         Requirements::javascript("silverstripe/admin: thirdparty/tinymce/tinymce.min.js");
         Requirements::javascript("dynamic/silverstripe-jobs: javascript/simple_HTML_editor.js");
