@@ -14,11 +14,11 @@
         }
     ],
     "require": {
-        "evanshunt/lumberjack-sort-and-summary": "^1.0",
-        "silverstripe/lumberjack": "^2",
-        "silverstripe/recipe-cms": "^4",
-        "silverstripe/vendor-plugin": "^1",
-        "symbiote/silverstripe-gridfieldextensions": "^3.3"
+        "evanshunt/lumberjack-sort-and-summary": "^2.0",
+        "silverstripe/lumberjack": "^3",
+        "silverstripe/recipe-cms": "^5",
+        "silverstripe/vendor-plugin": "^2",
+        "symbiote/silverstripe-gridfieldextensions": "^4.0"
     },
     "require-dev": {
         "silverstripe/recipe-testing": "^2",
