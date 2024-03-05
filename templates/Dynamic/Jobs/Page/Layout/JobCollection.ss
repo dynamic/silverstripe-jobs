@@ -18,7 +18,7 @@
 		<% end_loop %>
 
 		<% with $PaginatedList %>
-			<% include Pagination %>
+			<% include Dynamic\Jobs\Includes\Pagination %>
 		<% end_with %>
 	<% else %>
 		<p>No entries</p>

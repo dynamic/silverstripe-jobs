@@ -137,42 +137,6 @@ class JobSubmission extends DataObject
     }
 
     /**
-     * @param null $params
-     * @return FieldList
-     */
-    public function getFrontEndFields($params = null)
-    {
-        // Resume Upload
-        $ResumeField = FileField::create('Resume')->setTitle('Resume');
-        $ResumeField->getValidator()->setAllowedExtensions([
-            'pdf',
-            'doc',
-            'docx',
-        ]);
-        $ResumeField->setFolderName('Uploads/Resumes');
-        $ResumeField->setRelationAutoSetting(false);
-        $ResumeField->setAttribute('required', true);
-
-        $fields = FieldList::create(
-            TextField::create('FirstName', 'First Name')
-                ->setAttribute('required', true),
-            TextField::create('LastName', 'Last Name')
-                ->setAttribute('required', true),
-            EmailField::create('Email')
-                ->setAttribute('required', true),
-            TextField::create('Phone')
-                ->setAttribute('required', true),
-            DateField::create('Available', 'Date Available'),
-            $ResumeField,
-            SimpleHtmlEditorField::create('Content', 'Cover Letter')
-        );
-
-        $this->extend('updateFrontEndFields', $fields);
-
-        return $fields;
-    }
-
-    /**
      * @return RequiredFields
      */
     public function getRequiredFields()
@@ -195,12 +159,12 @@ class JobSubmission extends DataObject
             $fields->removeByName([
                 'JobID',
             ]);
-    
+
             $fields->insertBefore(
                 ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle()),
                 'Content'
             );
-    
+
             $fields->insertBefore(
                 ReadonlyField::create(
                     'Created',
@@ -209,7 +173,7 @@ class JobSubmission extends DataObject
                 ),
                 'Content'
             );
-    
+
             $resume = $fields->dataFieldByName('Resume')
                 ->setFolderName('Uploads/Resumes');
             $fields->insertBefore($resume, 'Content');

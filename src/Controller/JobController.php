@@ -2,6 +2,7 @@
 
 namespace Dynamic\Jobs\Page;
 
+use Dynamic\Jobs\Form\JobSubmissionForm;
 use Dynamic\Jobs\Model\JobSubmission;
 use PageController;
 use SilverStripe\Control\Controller;
@@ -60,14 +61,10 @@ class JobController extends PageController
     }
 
     /**
-     * @return Form
+     * @return JobSubmissionForm
      */
-    public function JobApp()
+    public function JobApp(): JobSubmissionForm
     {
-        $App = singleton(JobSubmission::class);
-
-        $fields = $App->getFrontEndFields();
-
         $actions = FieldList::create(
             new FormAction('doApply', 'Apply')
         );
@@ -79,9 +76,13 @@ class JobController extends PageController
             'Phone',
         ]);
 
-        $this->extend('updateJobAppForm', $fields, $actions, $required);
+        $form = JobSubmissionForm::create($this, 'JobApp')
+            ->setActions($actions)
+            ->setValidator($required);
 
-        return Form::create($this, "JobApp", $fields, $actions, $required);
+        $this->extend('updateJobSubmissionForm', $form);
+
+        return $form;
     }
 
     /**
@@ -116,10 +117,10 @@ class JobController extends PageController
             $email = new Email($from, $to, $subject, $body);
             $email
                 ->setHTMLTemplate('Dynamic\Jobs\Email\JobSubmission')
-                ->setData(new ArrayData(array(
+                ->setData(new ArrayData([
                     'Submission' => JobSubmission::get()->byID($entry->ID),
                     'Configuration' => $this->parent(),
-                )));
+                ]));
 
             $email->send();
 
