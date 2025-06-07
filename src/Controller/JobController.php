@@ -108,9 +108,9 @@ class JobController extends PageController
         }
 
         if ($entry->write()) {
-            $to = $this->parent()->EmailRecipient;
-            $from = $this->parent()->FromAddress;
-            $subject = $this->parent()->EmailSubject;
+            $to = $this->parent()->EmailRecipient ?? '';
+            $from = $this->parent()->FromAddress ?? '';
+            $subject = $this->parent()->EmailSubject ?? '';
             $body = $this->parent()->Message ?? '';
 
             $email = new Email($from, $to, $subject, $body);
