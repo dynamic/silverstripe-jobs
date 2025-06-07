@@ -33,6 +33,11 @@ class JobControllerTest extends FunctionalTest
     {
         /** @var Job $object */
         $object = $this->objFromFixture(Job::class, 'one');
+        $object->publishSingle();
+        $parent = $object->Parent();
+        if ($parent && $parent->exists()) {
+            $parent->publishSingle();
+        }
         $link = $object->Link('apply');
 
         $page = $this->get($link);
@@ -60,9 +65,11 @@ class JobControllerTest extends FunctionalTest
         $this->autoFollowRedirection = false;
         $this->clearEmails();
 
-        $this->objFromFixture(JobCollection::class, 'default');
+        $collection = $this->objFromFixture(JobCollection::class, 'default');
+        $collection->publishSingle();
         /** @var Job $object */
         $object = $this->objFromFixture(Job::class, 'open');
+        $object->publishSingle();
 
         $this->get($object->Link('apply'));
         $page = $this->post($object->Link('JobApp'), [
@@ -88,6 +95,11 @@ class JobControllerTest extends FunctionalTest
     {
         /** @var Job $object */
         $object = $this->objFromFixture(Job::class, 'open');
+        $object->publishSingle();
+        $parent = $object->Parent();
+        if ($parent && $parent->exists()) {
+            $parent->publishSingle();
+        }
         $page = $this->get($object->Link('complete'));
 
         $this->assertInstanceOf(HttpResponse::class, $page);

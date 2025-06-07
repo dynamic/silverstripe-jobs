@@ -46,8 +46,10 @@ Dynamic\Jobs\Model\JobCategory:
 Dynamic\Jobs\Page\Job:
   one:
     Title: 'Job One'
+    Parent: =>Dynamic\Jobs\Page\JobCollection.default
   two:
     Title: 'Job Two'
+    Parent: =>Dynamic\Jobs\Page\JobCollection.default
   past:
     Title: 'Past'
     PostDate: '2017-11-01'
