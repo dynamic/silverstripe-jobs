@@ -36,9 +36,6 @@
         "process-timeout": 600
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "3.x-dev"
-        },
         "expose": [
             "javascript"
         ]
