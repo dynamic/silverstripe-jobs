@@ -208,22 +208,22 @@ class JobSubmission extends DataObject
             ]);
 
             $fields->insertBefore(
-                ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle()),
-                'Content'
+                'Content',
+                ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle())
             );
 
             $fields->insertBefore(
+                'Content',
                 ReadonlyField::create(
                     'Created',
                     $this->fieldLabel('Created'),
                     $this->dbObject('Created')->FormatFromSettings()
-                ),
-                'Content'
+                )
             );
 
             $resume = $fields->dataFieldByName('Resume')
                 ->setFolderName('Uploads/Resumes');
-            $fields->insertBefore($resume, 'Content');
+            $fields->insertBefore('Content', $resume);
         });
 
         return parent::getCMSFields();
