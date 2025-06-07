@@ -9,6 +9,7 @@ use SilverStripe\Admin\ModelAdmin;
 /**
  * Class JobAdmin
  *
+ * @mixin JobAdminExtension
  */
 class JobAdmin extends ModelAdmin
 {
