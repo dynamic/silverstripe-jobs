@@ -43,12 +43,12 @@ class JobController extends PageController
         $Form = $this->JobApp();
 
         $Form->Fields()->insertBefore(
+            'FirstName',
             ReadonlyField::create(
                 'PositionName',
                 'Position',
                 $this->getTitle()
-            ),
-            'FirstName'
+            )
         );
         $Form->Fields()->push(HiddenField::create('JobID', 'JobID', $this->ID));
 
@@ -111,7 +111,7 @@ class JobController extends PageController
             $to = $this->parent()->EmailRecipient;
             $from = $this->parent()->FromAddress;
             $subject = $this->parent()->EmailSubject;
-            $body = $this->parent()->EmailMessage;
+            $body = $this->parent()->Message ?? '';
 
             $email = new Email($from, $to, $subject, $body);
             $email
