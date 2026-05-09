@@ -130,7 +130,7 @@ class JobCollection extends \Page
     /**
      * @return ValidationResult
      */
-    public function validate()
+    public function validate(): ValidationResult
     {
         $result = parent::validate();
 
