@@ -12,7 +12,7 @@ use SilverStripe\Forms\TextField;
 use SilverStripe\Lumberjack\Model\Lumberjack;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\FieldType\DBDatetime;
-use SilverStripe\ORM\ValidationResult;
+use SilverStripe\Core\Validation\ValidationResult;
 
 /**
  * Class JobCollection
@@ -44,7 +44,7 @@ class JobCollection extends \Page
     /**
      * @var string
      */
-    private static $description = 'Display a list of available jobs';
+    private static $class_description = 'Display a list of available jobs';
 
     /**
      * @var string
