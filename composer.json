@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "evanshunt/lumberjack-sort-and-summary": "^2.0",
+        "evanshunt/lumberjack-sort-and-summary": "^2.0 || ^3.0",
         "hudhaifas/silverstripe-frontend-fields": "5.x-dev",
         "silverstripe/lumberjack": "^3",
         "silverstripe/recipe-cms": "^5 || ^6",
