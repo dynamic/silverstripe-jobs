@@ -12,7 +12,7 @@ Post open positions and receive online application submissions.
 
 ## Requirements
 
-- SilverStripe 4.x
+- Silverstripe ^6
 
 ## Installation
 
