@@ -87,13 +87,14 @@ class JobTest extends SapphireTest
     public function testProvidePermissions()
     {
         /** @var Job $object */
-        $object = Injector::inst()->create(Job::class);
-        $perms = [
-            'Job_EDIT' => 'Edit a Job',
-            'Job_DELETE' => 'Delete a Job',
-            'Job_CREATE' => 'Create a Job',
-        ];
-        //$this->assertEquals($perms, $object->providePermissions());
+        $object = \SilverStripe\Core\Injector\Injector::inst()->create(Job::class);
+        $perms = $object->providePermissions();
+        $this->assertIsArray($perms);
+        $this->assertArrayHasKey('JOB_MANAGE', $perms);
+        $this->assertEquals('Manage Jobs', $perms['JOB_MANAGE']['name']);
+        $this->assertEquals('Jobs', $perms['JOB_MANAGE']['category']);
+        $this->assertEquals('Access to add, edit and delete Jobs', $perms['JOB_MANAGE']['help']);
+        $this->assertEquals(400, $perms['JOB_MANAGE']['sort']);
     }
 
     /**

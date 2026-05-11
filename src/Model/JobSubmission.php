@@ -2,28 +2,38 @@
 
 namespace Dynamic\Jobs\Model;
 
-use Dynamic\Jobs\Admin\JobAdmin;
-use Dynamic\Jobs\Forms\SimpleHtmlEditorField;
 use Dynamic\Jobs\Page\Job;
 use SilverStripe\Assets\File;
-use SilverStripe\Control\Controller;
-use SilverStripe\Control\Director;
+use Dynamic\Jobs\Admin\JobAdmin;
+use SilverStripe\ORM\DataObject;
 use SilverStripe\Forms\DateField;
-use SilverStripe\Forms\EmailField;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FileField;
-use SilverStripe\Forms\ReadonlyField;
-use SilverStripe\Forms\RequiredFields;
 use SilverStripe\Forms\TextField;
-use SilverStripe\ORM\DataObject;
+use SilverStripe\Control\Director;
+use SilverStripe\Forms\EmailField;
+use SilverStripe\Control\Controller;
+use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\Security\Permission;
+use SilverStripe\Forms\RequiredFields;
+use HudhaifaS\Forms\FrontendRichTextField;
+use Dynamic\Jobs\Forms\SimpleHtmlEditorField;
 
 /**
  * Class JobSubmission
  *
  * @property string $LinkedIn
  * @property string $Portfolio
+ * @property string $City
+ * @property string $State
+ * @property string $PostalCode
  * @property bool $LocationAgreement
+ * @property bool $Qualified
+ * @property bool $SendQuestionnaire
+ * @property string $QuestionnaireResults
+ * @property bool $QuestionnaireCompleted
+ * @property bool $FirstInterviewInvite
+ * @property bool $SecondInterviewInvite
  * @property string $FirstName
  * @property string $LastName
  * @property string $Email
@@ -34,6 +44,7 @@ use SilverStripe\Security\Permission;
  * @property int $ResumeID
  * @method Job Job()
  * @method File Resume()
+ * @method DataList|JobNote[] Notes()
  * @mixin JobSubmissionDataExtension
  */
 class JobSubmission extends DataObject
@@ -164,7 +175,7 @@ class JobSubmission extends DataObject
                 ->setAttribute('required', true),
             DateField::create('Available', 'Date Available'),
             $ResumeField,
-            SimpleHtmlEditorField::create('Content', 'Cover Letter')
+            FrontendRichTextField::create('Content', 'Cover Letter')
         );
 
         $this->extend('updateFrontEndFields', $fields);
@@ -195,24 +206,24 @@ class JobSubmission extends DataObject
             $fields->removeByName([
                 'JobID',
             ]);
-    
+
             $fields->insertBefore(
-                ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle()),
-                'Content'
+                'Content',
+                ReadonlyField::create('JobTitle', $this->fieldLabel('Job.Title'), $this->Job()->getTitle())
             );
-    
+
             $fields->insertBefore(
+                'Content',
                 ReadonlyField::create(
                     'Created',
                     $this->fieldLabel('Created'),
                     $this->dbObject('Created')->FormatFromSettings()
-                ),
-                'Content'
+                )
             );
-    
+
             $resume = $fields->dataFieldByName('Resume')
                 ->setFolderName('Uploads/Resumes');
-            $fields->insertBefore($resume, 'Content');
+            $fields->insertBefore('Content', $resume);
         });
 
         return parent::getCMSFields();
