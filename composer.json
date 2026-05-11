@@ -17,7 +17,7 @@
         "silverstripe/lumberjack": "^4",
         "silverstripe/recipe-cms": "^6",
         "silverstripe/vendor-plugin": "^3",
-        "symbiote/silverstripe-gridfieldextensions": "^4"
+        "symbiote/silverstripe-gridfieldextensions": "^5"
     },
     "require-dev": {
         "silverstripe/recipe-testing": "^4"
