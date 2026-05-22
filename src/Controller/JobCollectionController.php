@@ -3,7 +3,7 @@
 namespace Dynamic\Jobs\Page;
 
 use \PageController;
-use SilverStripe\ORM\PaginatedList;
+use SilverStripe\Model\List\PaginatedList;
 
 /**
  * Class JobCollectionController
