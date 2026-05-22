@@ -7,7 +7,7 @@ use Dynamic\Jobs\Model\JobCategory;
 use Dynamic\Jobs\Page\Job;
 use Dynamic\Jobs\Page\JobCollection;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\ORM\ArrayList;
+use SilverStripe\Model\List\ArrayList;
 use SilverStripe\ORM\DataList;
 use SilverStripe\ORM\FieldType\DBDatetime;
 use SilverStripe\ORM\FieldType\DBField;
