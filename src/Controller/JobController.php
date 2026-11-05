@@ -5,16 +5,18 @@ namespace Dynamic\Jobs\Page;
 use Dynamic\Jobs\Model\JobSubmission;
 use PageController;
 use SilverStripe\Control\Controller;
+use Psr\Log\LoggerInterface;
 use SilverStripe\Control\Email\Email;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FileField;
 use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\ReadonlyField;
-use SilverStripe\Forms\RequiredFields;
-use SilverStripe\View\ArrayData;
-use SilverStripe\View\ViewableData_Customised;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
+use SilverStripe\Model\ArrayData;
+use SilverStripe\Model\ModelDataCustomised;
 
 /**
  * Class JobController
@@ -36,7 +38,7 @@ class JobController extends PageController
     ];
 
     /**
-     * @return ViewableData_Customised
+     * @return ModelDataCustomised
      */
     public function apply()
     {
@@ -72,11 +74,12 @@ class JobController extends PageController
             new FormAction('doApply', 'Apply')
         );
 
-        $required = new RequiredFields([
+        $required = RequiredFieldsValidator::create([
             'FirstName',
             'LastName',
             'Email',
             'Phone',
+            'Resume',
         ]);
 
         $this->extend('updateJobAppForm', $fields, $actions, $required);
@@ -121,14 +124,21 @@ class JobController extends PageController
                     'Configuration' => $this->parent(),
                 )));
 
-            $email->send();
+            if ($to) {
+                $email->send();
+            } else {
+                Injector::inst()->get(LoggerInterface::class)->warning(
+                    'Job application saved without a notification: the job holder has no EmailRecipient.',
+                    ['submission' => $entry->ID, 'job' => $this->ID]
+                );
+            }
 
             $this->redirect(Controller::join_links($this->Link(), 'complete'));
         }
     }
 
     /**
-     * @return ViewableData_Customised
+     * @return ModelDataCustomised
      */
     public function complete()
     {
