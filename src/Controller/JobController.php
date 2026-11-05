@@ -12,9 +12,9 @@ use SilverStripe\Forms\Form;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\HiddenField;
 use SilverStripe\Forms\ReadonlyField;
-use SilverStripe\Forms\RequiredFields;
-use SilverStripe\View\ArrayData;
-use SilverStripe\View\ViewableData_Customised;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
+use SilverStripe\Model\ArrayData;
+use SilverStripe\Model\ModelDataCustomised;
 
 /**
  * Class JobController
@@ -36,7 +36,7 @@ class JobController extends PageController
     ];
 
     /**
-     * @return ViewableData_Customised
+     * @return ModelDataCustomised
      */
     public function apply()
     {
@@ -72,7 +72,7 @@ class JobController extends PageController
             new FormAction('doApply', 'Apply')
         );
 
-        $required = new RequiredFields([
+        $required = RequiredFieldsValidator::create([
             'FirstName',
             'LastName',
             'Email',
@@ -121,14 +121,16 @@ class JobController extends PageController
                     'Configuration' => $this->parent(),
                 )));
 
-            $email->send();
+            if ($to) {
+                $email->send();
+            }
 
             $this->redirect(Controller::join_links($this->Link(), 'complete'));
         }
     }
 
     /**
-     * @return ViewableData_Customised
+     * @return ModelDataCustomised
      */
     public function complete()
     {

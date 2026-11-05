@@ -6,7 +6,7 @@ use Dynamic\Jobs\Model\JobSubmission;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\Security\Member;
 
 /**
@@ -67,7 +67,7 @@ class JobSubmissionTest extends SapphireTest
         /** @var JobSubmission $object */
         $object = Injector::inst()->create(JobSubmission::class);
         $fields = $object->getRequiredFields();
-        $this->assertInstanceOf(RequiredFields::class, $fields);
+        $this->assertInstanceOf(RequiredFieldsValidator::class, $fields);
     }
 
     /**

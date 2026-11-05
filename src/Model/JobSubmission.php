@@ -15,7 +15,8 @@ use SilverStripe\Forms\EmailField;
 use SilverStripe\Control\Controller;
 use SilverStripe\Forms\ReadonlyField;
 use SilverStripe\Security\Permission;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use HudhaifaS\Forms\FrontendRichTextField;
 use Dynamic\Jobs\Forms\SimpleHtmlEditorField;
 
@@ -175,7 +176,10 @@ class JobSubmission extends DataObject
                 ->setAttribute('required', true),
             DateField::create('Available', 'Date Available'),
             $ResumeField,
-            FrontendRichTextField::create('Content', 'Cover Letter')
+            // the rich-text field's package has no SS6 release; fall back to a plain textarea
+            class_exists(FrontendRichTextField::class)
+                ? FrontendRichTextField::create('Content', 'Cover Letter')
+                : TextareaField::create('Content', 'Cover Letter')
         );
 
         $this->extend('updateFrontEndFields', $fields);
@@ -184,11 +188,11 @@ class JobSubmission extends DataObject
     }
 
     /**
-     * @return RequiredFields
+     * @return RequiredFieldsValidator
      */
     public function getRequiredFields()
     {
-        return new RequiredFields([
+        return RequiredFieldsValidator::create([
             'FirstName',
             'LastName',
             'Email',
