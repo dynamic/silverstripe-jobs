@@ -176,7 +176,7 @@ class JobSubmission extends DataObject
                 ->setAttribute('required', true),
             DateField::create('Available', 'Date Available'),
             $ResumeField,
-            // the rich-text field's package has no SS6 release; fall back to a plain textarea
+            // hudhaifas/silverstripe-frontend-fields is optional; fall back to a plain textarea
             class_exists(FrontendRichTextField::class)
                 ? FrontendRichTextField::create('Content', 'Cover Letter')
                 : TextareaField::create('Content', 'Cover Letter')

@@ -5,7 +5,9 @@ namespace Dynamic\Jobs\Page;
 use Dynamic\Jobs\Model\JobSubmission;
 use PageController;
 use SilverStripe\Control\Controller;
+use Psr\Log\LoggerInterface;
 use SilverStripe\Control\Email\Email;
+use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\FileField;
 use SilverStripe\Forms\Form;
@@ -77,6 +79,7 @@ class JobController extends PageController
             'LastName',
             'Email',
             'Phone',
+            'Resume',
         ]);
 
         $this->extend('updateJobAppForm', $fields, $actions, $required);
@@ -123,6 +126,11 @@ class JobController extends PageController
 
             if ($to) {
                 $email->send();
+            } else {
+                Injector::inst()->get(LoggerInterface::class)->warning(
+                    'Job application saved without a notification: the job holder has no EmailRecipient.',
+                    ['submission' => $entry->ID, 'job' => $this->ID]
+                );
             }
 
             $this->redirect(Controller::join_links($this->Link(), 'complete'));
