@@ -6,7 +6,8 @@ use Dynamic\Jobs\Model\JobSubmission;
 use SilverStripe\Core\Injector\Injector;
 use SilverStripe\Dev\SapphireTest;
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\RequiredFields;
+use SilverStripe\Forms\TextareaField;
+use SilverStripe\Forms\Validation\RequiredFieldsValidator;
 use SilverStripe\Security\Member;
 
 /**
@@ -57,6 +58,9 @@ class JobSubmissionTest extends SapphireTest
         $object = Injector::inst()->create(JobSubmission::class);
         $fields = $object->getFrontEndFields();
         $this->assertInstanceOf(FieldList::class, $fields);
+        if (!class_exists('HudhaifaS\\Forms\\FrontendRichTextField')) {
+            $this->assertInstanceOf(TextareaField::class, $fields->dataFieldByName('Content'));
+        }
     }
 
     /**
@@ -67,7 +71,7 @@ class JobSubmissionTest extends SapphireTest
         /** @var JobSubmission $object */
         $object = Injector::inst()->create(JobSubmission::class);
         $fields = $object->getRequiredFields();
-        $this->assertInstanceOf(RequiredFields::class, $fields);
+        $this->assertInstanceOf(RequiredFieldsValidator::class, $fields);
     }
 
     /**

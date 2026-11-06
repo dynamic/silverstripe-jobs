@@ -4,6 +4,7 @@ namespace Dynamic\Jobs\Model;
 
 use Dynamic\Jobs\Page\Job;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\Forms\GridField\GridFieldAddNewButton;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\ManyManyList;
@@ -82,9 +83,10 @@ class JobCategory extends DataObject
                 'For internal reference only'
             ));
 
-        if ($this->ID) {
-            $fields->dataFieldByName('Jobs')->getConfig()
-                ->removeComponentsByType(GridFieldAddNewButton::class);
+        // SS6 scaffolds the Jobs relation (pages) as a TreeMultiselectField, not a GridField
+        $jobs = $fields->dataFieldByName('Jobs');
+        if ($this->ID && $jobs instanceof GridField) {
+            $jobs->getConfig()->removeComponentsByType(GridFieldAddNewButton::class);
         }
 
         return $fields;
